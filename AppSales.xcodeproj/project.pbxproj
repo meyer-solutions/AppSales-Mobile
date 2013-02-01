@@ -65,8 +65,10 @@
 		7F709D6E13BCC4270008DBAD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F709D6D13BCC4270008DBAD /* Security.framework */; };
 		7F709D8C13BD03D40008DBAD /* SalesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F709D8B13BD03D30008DBAD /* SalesViewController.m */; };
 		7F709D8F13BD064E0008DBAD /* ASAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F709D8E13BD064D0008DBAD /* ASAccount.m */; };
-		7F7F4A3F13E50A52006C6651 /* PaymentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F4A3E13E50A52006C6651 /* PaymentsViewController.m */; };
-		7F7F4A4213E51A99006C6651 /* YearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F4A4113E51A99006C6651 /* YearView.m */; };
+		7F82B197167DB1DC00C0D9E9 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F82B193167DB1D700C0D9E9 /* Default-Portrait.png */; };
+		7F82B198167DB1DC00C0D9E9 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F82B194167DB1D800C0D9E9 /* Default-Landscape@2x.png */; };
+		7F82B199167DB1DC00C0D9E9 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F82B195167DB1DA00C0D9E9 /* Default-Portrait@2x.png */; };
+		7F82B19A167DB1DC00C0D9E9 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F82B196167DB1DB00C0D9E9 /* Default-Landscape.png */; };
 		7F958AC713D46DD000FDFF75 /* DateButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F958AC613D46DD000FDFF75 /* DateButton@2x.png */; };
 		7F963B4213E98B8600CA62FD /* AccountStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F963B4113E98B8600CA62FD /* AccountStatusView.m */; };
 		7F97CFD5160CF9CF00313B1D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F97CFD4160CF9CF00313B1D /* Default-568h@2x.png */; };
@@ -725,10 +727,10 @@
 		7F709D8B13BD03D30008DBAD /* SalesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalesViewController.m; sourceTree = "<group>"; };
 		7F709D8D13BD064D0008DBAD /* ASAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASAccount.h; sourceTree = "<group>"; };
 		7F709D8E13BD064D0008DBAD /* ASAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASAccount.m; sourceTree = "<group>"; };
-		7F7F4A3D13E50A52006C6651 /* PaymentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentsViewController.h; sourceTree = "<group>"; };
-		7F7F4A3E13E50A52006C6651 /* PaymentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentsViewController.m; sourceTree = "<group>"; };
-		7F7F4A4013E51A99006C6651 /* YearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearView.h; sourceTree = "<group>"; };
-		7F7F4A4113E51A99006C6651 /* YearView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearView.m; sourceTree = "<group>"; };
+		7F82B193167DB1D700C0D9E9 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
+		7F82B194167DB1D800C0D9E9 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = "<group>"; };
+		7F82B195167DB1DA00C0D9E9 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
+		7F82B196167DB1DB00C0D9E9 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
 		7F958AC613D46DD000FDFF75 /* DateButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DateButton@2x.png"; sourceTree = "<group>"; };
 		7F963B4013E98B8600CA62FD /* AccountStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountStatusView.h; sourceTree = "<group>"; };
 		7F963B4113E98B8600CA62FD /* AccountStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountStatusView.m; sourceTree = "<group>"; };
@@ -1463,6 +1465,13 @@
 		7F709D6F13BCCB8B0008DBAD /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				7F82B193167DB1D700C0D9E9 /* Default-Portrait.png */,
+				7F82B194167DB1D800C0D9E9 /* Default-Landscape@2x.png */,
+				7F82B195167DB1DA00C0D9E9 /* Default-Portrait@2x.png */,
+				7F82B196167DB1DB00C0D9E9 /* Default-Landscape.png */,
+				7FDF727E13DAEBFE00B8CC4E /* Default.png */,
+				7FDF727F13DAEBFE00B8CC4E /* Default@2x.png */,
+				7F97CFD4160CF9CF00313B1D /* Default-568h@2x.png */,
 				6D81576114CB44BE005E8F3F /* passcode_square_empty.png */,
 				6D81576214CB44BE005E8F3F /* passcode_square_empty@2x.png */,
 				6D81576314CB44BE005E8F3F /* passcode_square_filled.png */,
@@ -1474,9 +1483,6 @@
 				7F398ECC13DE835C004BEC44 /* Lock@2x.png */,
 				7F398EC813DE7E3A004BEC44 /* Unlock.png */,
 				7F398ECD13DE835C004BEC44 /* Unlock@2x.png */,
-				7FDF727E13DAEBFE00B8CC4E /* Default.png */,
-				7FDF727F13DAEBFE00B8CC4E /* Default@2x.png */,
-				7F97CFD4160CF9CF00313B1D /* Default-568h@2x.png */,
 				7FDF727613D9C39100B8CC4E /* InApp.png */,
 				7FDF728413DAED8D00B8CC4E /* InApp@2x.png */,
 				7FAB532D13DD00470027274F /* Pin.png */,
@@ -1537,17 +1543,6 @@
 				7F398ED113DF21F2004BEC44 /* Transaction.m */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		7F7F4A3C13E50A32006C6651 /* Payments */ = {
-			isa = PBXGroup;
-			children = (
-				7F7F4A3D13E50A52006C6651 /* PaymentsViewController.h */,
-				7F7F4A3E13E50A52006C6651 /* PaymentsViewController.m */,
-				7F7F4A4013E51A99006C6651 /* YearView.h */,
-				7F7F4A4113E51A99006C6651 /* YearView.m */,
-			);
-			name = Payments;
 			sourceTree = "<group>";
 		};
 		7F88897A14CD4C9A007604D7 /* Passcode Lock */ = {
@@ -1656,7 +1651,6 @@
 				7F24E70B13E41EA20056EA97 /* Common */,
 				7F24E70C13E41EB00056EA97 /* Sales */,
 				7FDF601E13DD2193005F1E2D /* Report Details */,
-				7F7F4A3C13E50A32006C6651 /* Payments */,
 			);
 			name = Dashboard;
 			sourceTree = "<group>";
@@ -2805,6 +2799,10 @@
 				6D81576714CB44BE005E8F3F /* passcode_square_filled.png in Resources */,
 				6D81576814CB44BE005E8F3F /* passcode_square_filled@2x.png in Resources */,
 				7F97CFD5160CF9CF00313B1D /* Default-568h@2x.png in Resources */,
+				7F82B197167DB1DC00C0D9E9 /* Default-Portrait.png in Resources */,
+				7F82B198167DB1DC00C0D9E9 /* Default-Landscape@2x.png in Resources */,
+				7F82B199167DB1DC00C0D9E9 /* Default-Portrait@2x.png in Resources */,
+				7F82B19A167DB1DC00C0D9E9 /* Default-Landscape.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2852,8 +2850,6 @@
 				7F398ED213DF21F2004BEC44 /* Transaction.m in Sources */,
 				7F398ED513DF570E004BEC44 /* ReportDetailEntry.m in Sources */,
 				7F24E70713E40A0D0056EA97 /* DashboardViewController.m in Sources */,
-				7F7F4A3F13E50A52006C6651 /* PaymentsViewController.m in Sources */,
-				7F7F4A4213E51A99006C6651 /* YearView.m in Sources */,
 				7FAEB66613E6D0EE00750788 /* BadgedCell.m in Sources */,
 				7FAEB67113E6D3AC00750788 /* UIImage+Tinting.m in Sources */,
 				7FAEB69213E75B7400750788 /* AboutViewController.m in Sources */,
@@ -2953,14 +2949,12 @@
 		7F709D4F13BC98860008DBAD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Support/AppSales-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = AppSalesMobile;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
