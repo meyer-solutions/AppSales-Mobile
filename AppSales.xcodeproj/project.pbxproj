@@ -2232,6 +2232,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
+				TargetAttributes = {
+					7F709D2613BC98860008DBAD = {
+						DevelopmentTeam = ZDQPQQ9Z48;
+					};
+				};
 			};
 			buildConfigurationList = 7F709D2113BC98860008DBAD /* Build configuration list for PBXProject "AppSales" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2935,12 +2940,15 @@
 		7F709D4E13BC98860008DBAD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stefan Meyer (95NG89Y6LS)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Support/AppSales-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = AppSalesMobile;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2949,7 +2957,7 @@
 		7F709D4F13BC98860008DBAD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";

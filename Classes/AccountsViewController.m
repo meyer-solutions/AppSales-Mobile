@@ -396,7 +396,7 @@
 																			defaultValue:[productSortByValue isEqualToString:@"productId"]];
 	FieldSpecifier *productSortingByColorField = [FieldSpecifier checkFieldWithKey:@"sortby.color" title:@"Color" 
 																		defaultValue:[productSortByValue isEqualToString:@"color"]];
-	NSMutableArray *productSortingFields = [NSArray arrayWithObjects:productSortingByProductIdField, productSortingByColorField, nil];
+	NSMutableArray *productSortingFields = [NSMutableArray arrayWithObjects:productSortingByProductIdField, productSortingByColorField, nil];
 
 
 	FieldSectionSpecifier *productSortingSection = [FieldSectionSpecifier sectionWithFields:productSortingFields

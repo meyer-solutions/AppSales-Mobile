@@ -12,6 +12,8 @@
 
 @class ASAccount;
 
+extern NSUInteger DeviceSystemMajorVersion();
+
 @interface AppSalesAppDelegate : NSObject <UIApplicationDelegate, UIActionSheetDelegate, AccountsViewControllerDelegate, KKPasscodeViewControllerDelegate>
 {
 	UIWindow *window;

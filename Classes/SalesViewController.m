@@ -20,6 +20,7 @@
 #import "ReportDetailViewController.h"
 #import "AppleFiscalCalendar.h"
 #import "AccountsViewController.h"
+#import "AppSalesAppDelegate.h"
 
 #define kSheetTagDailyGraphOptions		1
 #define kSheetTagMonthlyGraphOptions	2
@@ -81,9 +82,10 @@
 	self.viewMode = [[NSUserDefaults standardUserDefaults] integerForKey:kSettingDashboardViewMode];
 	
 	BOOL iPad = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad);
-	
-	CGFloat graphHeight = iPad ? 450.0 : (self.view.bounds.size.height - 44.0) * 0.5;
-	self.graphView = [[[GraphView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, graphHeight)] autorelease];
+    BOOL isOS7 = (DeviceSystemMajorVersion() >= 7);
+    
+	CGFloat graphHeight = iPad ? 450.0 : (self.view.bounds.size.height - ((isOS7)?125.0:44.0f) ) * 0.5;
+	self.graphView = [[[GraphView alloc] initWithFrame:CGRectMake(0, (isOS7)?50:0, self.view.bounds.size.width, graphHeight)] autorelease];
 	graphView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	graphView.delegate = self;
 	graphView.dataSource = self;
