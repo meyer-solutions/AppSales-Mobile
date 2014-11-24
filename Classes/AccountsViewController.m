@@ -103,6 +103,22 @@
 	[self.tableView reloadData];
 }
 
+- (void)downloadReportsWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    for (ASAccount *account in self.accounts) {
+		if (account.password && account.password.length > 0) { //Only download reports for accounts with login
+            [[ReportDownloadCoordinator sharedReportDownloadCoordinator] setBackgroundCompletionHandler:^(UIBackgroundFetchResult result){
+                if (completionHandler) {
+                    completionHandler(result);
+                }
+            }];
+            [[ReportDownloadCoordinator sharedReportDownloadCoordinator] downloadReportsForAccount:account];
+		}
+	}
+//    if (completionHandler) {
+//        completionHandler(UIBackgroundFetchResultNewData);        
+//    }
+}
+
 - (void)downloadReports:(id)sender
 {
 	for (ASAccount *account in self.accounts) {

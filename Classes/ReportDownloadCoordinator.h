@@ -10,6 +10,8 @@
 
 @class ASAccount, Product;
 
+typedef void (^CompletionHandlerType)(UIBackgroundFetchResult);
+
 @interface ReportDownloadCoordinator : NSObject {
 	
 	NSOperationQueue *reportDownloadQueue;
@@ -17,6 +19,7 @@
 }
 
 @property (nonatomic, assign) BOOL isBusy;
+@property (nonatomic, copy) CompletionHandlerType backgroundCompletionHandler;
 
 + (id)sharedReportDownloadCoordinator;
 - (void)downloadReportsForAccount:(ASAccount *)account;

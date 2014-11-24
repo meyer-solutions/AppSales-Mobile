@@ -42,6 +42,7 @@
 
 - (void)reloadAccounts;
 - (void)downloadReports:(id)sender;
+- (void)downloadReportsWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 - (void)doExport;
 - (NSString *)folderNameForExportingReportsOfAccount:(ASAccount *)account;
 - (void)showSettings;

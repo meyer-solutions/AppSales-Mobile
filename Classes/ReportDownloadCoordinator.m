@@ -12,6 +12,12 @@
 #import "ASAccount.h"
 #import "Product.h"
 
+@interface ReportDownloadCoordinator () {
+    NSUInteger overallReportsDownloaded;
+}
+
+@end
+
 @implementation ReportDownloadCoordinator
 
 @synthesize isBusy;
@@ -20,9 +26,14 @@
 {
     self = [super init];
     if (self) {
+        
+        overallReportsDownloaded = 0;
+        
 		reportDownloadQueue = [[NSOperationQueue alloc] init];
 		reportDownloadQueue.maxConcurrentOperationCount = 1;
 		[reportDownloadQueue addObserver:self forKeyPath:@"operationCount" options:NSKeyValueObservingOptionNew context:nil];
+        
+        
     }
 	return self;
 }
@@ -41,6 +52,11 @@
 {
 	if ([keyPath isEqualToString:@"operationCount"]) {
 		self.isBusy = (reportDownloadQueue.operationCount > 0);
+        if (!self.isBusy) {
+            if (self.backgroundCompletionHandler) {
+                self.backgroundCompletionHandler((overallReportsDownloaded>0)?UIBackgroundFetchResultNewData:UIBackgroundFetchResultNoData);
+            }
+        }
 	}
 }
 
@@ -58,12 +74,13 @@
 		NSLog(@"Background task for downloading reports has expired!");
 	}];
 	[operation setCompletionBlock:^ {
+        if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground) {
+            NSInteger numberOfReportsDownloaded = operation.downloadCount;
+            overallReportsDownloaded += numberOfReportsDownloaded;
+            [[UIApplication sharedApplication] setApplicationIconBadgeNumber:numberOfReportsDownloaded];
+        }
 		dispatch_async(dispatch_get_main_queue(), ^ {
 			account.isDownloadingReports = NO;
-			if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground) {
-				NSInteger numberOfReportsDownloaded = operation.downloadCount;
-				[[UIApplication sharedApplication] setApplicationIconBadgeNumber:numberOfReportsDownloaded];
-			}
 			[[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 			if (backgroundTaskID != UIBackgroundTaskInvalid) {
 				[[UIApplication sharedApplication] endBackgroundTask:backgroundTaskID];

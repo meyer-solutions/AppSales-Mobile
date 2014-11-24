@@ -93,6 +93,9 @@
 		}
 	}
 	
+    
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: UIApplicationBackgroundFetchIntervalMinimum];
+    
 	return YES;
 }
 
@@ -133,6 +136,27 @@
 	UINavigationController *salesNavController = [[[UINavigationController alloc] initWithRootViewController:salesVC] autorelease];
 	
 	self.window.rootViewController = salesNavController;
+}
+
+-(void) application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    NSLog(@"Background fetch started...");
+    
+    //---do background fetch here---
+    // You have up to 30 seconds to perform the fetch
+    
+    BOOL downloadSuccessful = YES;
+    
+    [self.accountsViewController performSelector:@selector(downloadReportsWithCompletionHandler:) withObject:completionHandler afterDelay:0.0];
+    
+//    if (downloadSuccessful) {
+//        //---set the flag that data is successfully downloaded---
+//        completionHandler(UIBackgroundFetchResultNewData);
+//    } else {
+//        //---set the flag that download is not successful---
+//        completionHandler(UIBackgroundFetchResultFailed);
+//    }
+    
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
