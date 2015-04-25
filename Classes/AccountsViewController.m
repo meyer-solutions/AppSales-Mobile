@@ -17,7 +17,6 @@
 #import "MBProgressHUD.h"
 #import "ReportImportOperation.h"
 #import "BadgedCell.h"
-#import "UIImage+Tinting.h"
 #import "AboutViewController.h"
 #import "AccountStatusView.h"
 #import "KKPasscodeLock.h"
@@ -60,6 +59,8 @@
 	self.navigationItem.rightBarButtonItem = refreshButtonItem;
 	
 	self.title = NSLocalizedString(@"AppSales", nil);
+	self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+	
 	UIBarButtonItem *addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewAccount)] autorelease];
 	self.navigationItem.leftBarButtonItem = addButton;
 	
@@ -140,12 +141,11 @@
 {
 	AboutViewController *aboutViewController = [[[AboutViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 	UINavigationController *aboutNavController = [[[UINavigationController alloc] initWithRootViewController:aboutViewController] autorelease];
+	
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 		aboutNavController.modalPresentationStyle = UIModalPresentationFormSheet;
-	} else {
-		aboutNavController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 	}
-	[self presentModalViewController:aboutNavController animated:YES];
+	[self presentViewController:aboutNavController animated:YES completion:nil];
 }
 
 
@@ -210,11 +210,9 @@
 		cell.textLabel.text = NSLocalizedString(@"Sales and Trends", nil);
 		cell.badgeCount = badge;
 		cell.imageView.image = [UIImage imageNamed:@"Sales.png"];
-		cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"Sales.png" color:[UIColor whiteColor]];
 	} else if (indexPath.row == 1) {
 		cell.textLabel.text = NSLocalizedString(@"Account", nil);
 		cell.imageView.image = [UIImage imageNamed:@"Account.png"];
-		cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"Account.png" color:[UIColor whiteColor]];
 		cell.badgeCount = 0;
 	}
 	return cell;
@@ -307,7 +305,7 @@
 		navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 		
 	}
-	[self presentModalViewController:navigationController animated:YES];
+	[self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)editAccount:(ASAccount *)account
@@ -372,7 +370,7 @@
 		editAccountViewController.hidesBottomBarWhenPushed = YES;
 	}
 	
-	editAccountViewController.contentSizeForViewInPopover = CGSizeMake(320, 480);
+	editAccountViewController.preferredContentSize = CGSizeMake(320, 480);
 	
 	[self.navigationController pushViewController:editAccountViewController animated:YES];
 }
@@ -443,7 +441,7 @@
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 		settingsNavController.modalPresentationStyle = UIModalPresentationFormSheet;
 	}
-	[self presentModalViewController:settingsNavController animated:YES];
+	[self presentViewController:settingsNavController animated:YES completion:nil];
 }
 
 - (void)fieldEditor:(FieldEditorViewController *)editor didFinishEditingWithValues:(NSDictionary *)returnValues
@@ -498,7 +496,7 @@
 		}
 		[self saveContext];
 		if ([editor.editorIdentifier isEqualToString:kAddNewAccountEditorIdentifier]) {
-			[editor dismissModalViewControllerAnimated:YES];
+			[editor dismissViewControllerAnimated:YES completion:nil];
 		}
 		self.selectedAccount = nil;
 	} else if ([editor.editorIdentifier isEqualToString:kSettingsEditorIdentifier]) {
@@ -514,7 +512,7 @@
 				}
 			}
 		}
-		[self dismissModalViewControllerAnimated:YES];
+		[self dismissViewControllerAnimated:YES completion:nil];
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:ASViewSettingsDidChangeNotification object:nil];
 	}
@@ -564,8 +562,8 @@
 		[confirmDeleteAlert show];
 	} else if ([key isEqualToString:@"SelectVendorIDButton"]) {
 		FieldEditorViewController *vc = nil;
-		if (self.modalViewController) {
-			UINavigationController *nav = (UINavigationController *)self.modalViewController;
+		if (self.presentedViewController) {
+			UINavigationController *nav = (UINavigationController *)self.presentedViewController;
 			vc = (FieldEditorViewController *)[[nav viewControllers] objectAtIndex:0];
 		} else {
 			vc = (FieldEditorViewController *)[self.navigationController.viewControllers lastObject];
@@ -688,12 +686,8 @@
 		}
 	} else if (alertView.tag == kAlertTagConfirmDelete) {
 		if (buttonIndex != [alertView cancelButtonIndex]) {
-			MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-			[hud setLabelText:NSLocalizedString(@"Deleting Account...", nil)];
-			
-			ASAccount *account = [[self.selectedAccount retain] autorelease];
+			[self deleteAccount:self.selectedAccount];
 			[self.navigationController popViewControllerAnimated:YES];
-			[self performSelector:@selector(deleteAccount:) withObject:account afterDelay:0.1];
 		}
 	}
 }
@@ -719,7 +713,7 @@
 
 - (void)fieldEditorDidCancel:(FieldEditorViewController *)editor
 {
-	[editor dismissModalViewControllerAnimated:YES];
+	[editor dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didSettingsChanged:(KKPasscodeSettingsViewController*)viewController

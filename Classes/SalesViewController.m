@@ -45,6 +45,8 @@
 		self.title = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? NSLocalizedString(@"Sales", nil) : [account displayName];
 		self.tabBarItem.image = [UIImage imageNamed:@"Sales.png"];
 		
+		self.edgesForExtendedLayout = UIRectEdgeNone;
+		
 		sortedDailyReports = [NSMutableArray new];
 		sortedWeeklyReports = [NSMutableArray new];
 		sortedCalendarMonthReports = [NSMutableArray new];
@@ -105,7 +107,6 @@
 		segments = [NSArray arrayWithObjects:NSLocalizedString(@"Reports", nil), NSLocalizedString(@"Months", nil), nil];
 	}
 	UISegmentedControl *tabControl = [[[UISegmentedControl alloc] initWithItems:segments] autorelease];
-	tabControl.segmentedControlStyle = UISegmentedControlStyleBar;
 	[tabControl addTarget:self action:@selector(switchTab:) forControlEvents:UIControlEventValueChanged];
 	
 	if (iPad) {
@@ -704,7 +705,7 @@
 	if (selectedTab == 0 || selectedTab == 1) {
 		UIButton *latestValueButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		latestValueButton.frame = CGRectMake(0, 0, 64, 28);
-		latestValueButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
+		latestValueButton.titleLabel.font = [UIFont systemFontOfSize:16.0];
 		latestValueButton.titleLabel.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
 		latestValueButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
 		[latestValueButton setBackgroundImage:[UIImage imageNamed:@"LatestValueButton.png"] forState:UIControlStateNormal];
