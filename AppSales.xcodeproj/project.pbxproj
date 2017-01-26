@@ -107,6 +107,8 @@
 		DAFC5F831C16B5F400261B16 /* ReviewsByVersionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F821C16B5F400261B16 /* ReviewsByVersionViewController.m */; };
 		DAFC5F931C16BFAD00261B16 /* Review.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F921C16BFAD00261B16 /* Review.m */; };
 		DAFC5F961C16C07100261B16 /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F951C16C07100261B16 /* Version.m */; };
+		F8D511121E3A1F5700CE7B4B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D511101E3A1F5700CE7B4B /* Fabric.framework */; };
+		F8D511131E3A1F5700CE7B4B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D511111E3A1F5700CE7B4B /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -291,6 +293,8 @@
 		DAFC5F941C16C07100261B16 /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
 		DAFC5F951C16C07100261B16 /* Version.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
 		F89772D31E1A998A00DCF613 /* AppSalesMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = AppSalesMobile.entitlements; path = AppSales/AppSalesMobile.entitlements; sourceTree = "<group>"; };
+		F8D511101E3A1F5700CE7B4B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		F8D511111E3A1F5700CE7B4B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F709D2C13BC98860008DBAD /* UIKit.framework in Frameworks */,
+				F8D511121E3A1F5700CE7B4B /* Fabric.framework in Frameworks */,
 				7FD2C1EB13CE486A002868C7 /* QuartzCore.framework in Frameworks */,
 				7F709D6E13BCC4270008DBAD /* Security.framework in Frameworks */,
 				7F709D3013BC98860008DBAD /* CoreGraphics.framework in Frameworks */,
@@ -307,6 +312,7 @@
 				7F3796CC13F8245800FA6E49 /* MessageUI.framework in Frameworks */,
 				DA4357FC1C113B670056702C /* LocalAuthentication.framework in Frameworks */,
 				7F3796CD13F8246200FA6E49 /* libz.dylib in Frameworks */,
+				F8D511131E3A1F5700CE7B4B /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +428,8 @@
 		7F709D2A13BC98860008DBAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F8D511101E3A1F5700CE7B4B /* Fabric.framework */,
+				F8D511111E3A1F5700CE7B4B /* Crashlytics.framework */,
 				7F1499CC13BE172300D89064 /* libz.dylib */,
 				DA4357FB1C113B670056702C /* LocalAuthentication.framework */,
 				7F3796C913F8244000FA6E49 /* MessageUI.framework */,
@@ -728,6 +736,7 @@
 				7F709D2313BC98860008DBAD /* Sources */,
 				7F709D2413BC98860008DBAD /* Frameworks */,
 				7F709D2513BC98860008DBAD /* Resources */,
+				F8D5110F1E3A1F3200CE7B4B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -802,6 +811,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F8D5110F1E3A1F3200CE7B4B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run b350bddd611d040900cab9452afda1c29c74c08b 67177a307dccf818341e626aa23de705f2801016a7510fa5ee9192b17fa9c691";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7F709D2313BC98860008DBAD /* Sources */ = {
@@ -974,6 +999,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = AppSales/AppSalesMobile.entitlements;
 				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
@@ -996,6 +1025,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = AppSales/AppSalesMobile.entitlements;
 				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
