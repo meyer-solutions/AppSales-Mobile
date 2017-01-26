@@ -336,20 +336,55 @@
 
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-	if (persistentStoreCoordinator != nil) {
-		return persistentStoreCoordinator;
-	}	
-	NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"AppSales.sqlite"];
-	
-	NSError *error = nil;
-	persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-	NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @(YES),
-							  NSInferMappingModelAutomaticallyOption: @(YES)};
-	if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
-	}
-	return persistentStoreCoordinator;
+    if (persistentStoreCoordinator != nil) {
+        return persistentStoreCoordinator;
+    }
+    
+    NSURL* docURL = [[NSURL fileURLWithPath:[self applicationDocumentsDirectory]] URLByAppendingPathComponent:@"AppSales.sqlite"];
+    
+    NSURL* sharedURL = [[self sharedApplicationGroupContainer] URLByAppendingPathComponent:@"AppSales.sqlite"];
+    NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"AppSales.sqlite"];
+    
+    NSError *error = nil;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:docURL.path]) {
+        if (sharedURL && [[NSFileManager defaultManager] fileExistsAtPath:sharedURL.path]) {
+            if (![[NSFileManager defaultManager] removeItemAtURL:sharedURL error:&error]) {
+                NSLog(@"%@",error);
+            }
+        }
+        if (![[NSFileManager defaultManager] copyItemAtURL:docURL toURL:storeURL error:&error]) {
+            NSLog(@"%@",error);
+        }
+    }
+    
+    if (sharedURL && [[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
+        NSError* error = nil;
+        if (![[NSFileManager defaultManager] fileExistsAtPath:sharedURL.path]) {
+            if (![[NSFileManager defaultManager] moveItemAtURL:storeURL toURL:sharedURL error:&error]) {
+                NSLog(@"problem:%@",error);
+            }
+        }
+        
+    } else {
+        [[NSFileManager defaultManager] copyItemAtURL:sharedURL toURL:storeURL error:nil];
+    }
+    
+    //[[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
+    //[[NSFileManager defaultManager] copyItemAtURL:sharedURL toURL:docURL error:&error];
+    
+    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:sharedURL options:options error:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    [[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
+    
+    return persistentStoreCoordinator;
 }
 
 
@@ -361,6 +396,13 @@
 	NSURL *appSupportDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
 	[[NSFileManager defaultManager] createDirectoryAtPath:[appSupportDirectory path] withIntermediateDirectories:YES attributes:nil error:nil];
 	return appSupportDirectory;
+}
+
+- (NSURL *)sharedApplicationGroupContainer {
+    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.de.meyer-solutions.AppSalesMobile"];
+    NSAssert(containerURL != nil, @"The shared application group container is unavailable. Check your entitlements and provisioning profiles for this target.");
+    
+    return containerURL;
 }
 
 - (void)promoCodeDownloadFailed:(NSNotification *)notification {

@@ -36,6 +36,7 @@
 - (void)saveContext;
 - (NSString *)applicationDocumentsDirectory;
 - (NSURL *)applicationSupportDirectory;
+- (NSURL *)sharedApplicationGroupContainer;
 - (void)loadAccount:(ASAccount *)account;
 - (void)selectAccount:(id)sender;
 - (void)showPasscodeLockIfNeededWithTouchID:(BOOL)useTouchID;
