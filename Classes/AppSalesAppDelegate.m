@@ -353,6 +353,10 @@
     
     NSError *error = nil;
     
+    //[[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
+    //[[NSFileManager defaultManager] copyItemAtURL:sharedURL toURL:docURL error:&error];
+    
+    
     if ([[NSFileManager defaultManager] fileExistsAtPath:docURL.path]) {
         if (sharedURL && [[NSFileManager defaultManager] fileExistsAtPath:sharedURL.path]) {
             if (![[NSFileManager defaultManager] removeItemAtURL:sharedURL error:&error]) {
@@ -363,7 +367,7 @@
             NSLog(@"%@",error);
         }
     }
-    
+    /*
     if (sharedURL && [[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
         NSError* error = nil;
         if (![[NSFileManager defaultManager] fileExistsAtPath:sharedURL.path]) {
@@ -374,21 +378,19 @@
         
     } else {
         [[NSFileManager defaultManager] copyItemAtURL:sharedURL toURL:storeURL error:nil];
-    }
+    }*/
     
-    //[[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
-    //[[NSFileManager defaultManager] copyItemAtURL:sharedURL toURL:docURL error:&error];
     
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
                              [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:sharedURL options:options error:&error]) {
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
-    [[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
+    //[[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
     
     return persistentStoreCoordinator;
 }
