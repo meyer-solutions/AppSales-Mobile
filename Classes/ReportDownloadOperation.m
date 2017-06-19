@@ -334,7 +334,10 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 				NSData *paymentVendorsData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:paymentVendorsURL] returningResponse:nil error:nil];
 				NSDictionary *paymentVendors = [NSJSONSerialization JSONObjectWithData:paymentVendorsData options:0 error:nil];
 				NSArray *sapVendors = paymentVendors[@"data"];
-
+                if (![sapVendors isKindOfClass:[NSArray class]]) {
+                    sapVendors = @[];
+                }
+                
 				if (self.isCancelled) {
 					[self completeDownloadWithStatus:NSLocalizedString(@"Canceled", nil)];
 				} else if (sapVendors.count > 0) {
