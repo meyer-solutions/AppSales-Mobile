@@ -348,21 +348,21 @@
     
     NSURL* docURL = [[NSURL fileURLWithPath:[self applicationDocumentsDirectory]] URLByAppendingPathComponent:@"AppSales.sqlite"];
     
-    NSURL* sharedURL = [[self sharedApplicationGroupContainer] URLByAppendingPathComponent:@"AppSales.sqlite"];
+    //NSURL* sharedURL = [[self sharedApplicationGroupContainer] URLByAppendingPathComponent:@"AppSales.sqlite"];
     NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"AppSales.sqlite"];
     
     NSError *error = nil;
     
     //[[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
-    //[[NSFileManager defaultManager] copyItemAtURL:sharedURL toURL:docURL error:&error];
+    //[[NSFileManager defaultManager] copyItemAtURL:storeURL toURL:docURL error:&error];
     
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:docURL.path]) {
-        if (sharedURL && [[NSFileManager defaultManager] fileExistsAtPath:sharedURL.path]) {
-            if (![[NSFileManager defaultManager] removeItemAtURL:sharedURL error:&error]) {
-                NSLog(@"%@",error);
-            }
-        }
+//        if (sharedURL && [[NSFileManager defaultManager] fileExistsAtPath:sharedURL.path]) {
+//            if (![[NSFileManager defaultManager] removeItemAtURL:sharedURL error:&error]) {
+//                NSLog(@"%@",error);
+//            }
+//        }
         if (![[NSFileManager defaultManager] copyItemAtURL:docURL toURL:storeURL error:&error]) {
             NSLog(@"%@",error);
         }
@@ -390,7 +390,7 @@
         abort();
     }
     
-    //[[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
+    [[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
     
     return persistentStoreCoordinator;
 }
