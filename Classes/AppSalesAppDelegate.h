@@ -39,6 +39,6 @@
 - (NSURL *)sharedApplicationGroupContainer;
 - (void)loadAccount:(ASAccount *)account;
 - (void)selectAccount:(id)sender;
-- (void)showPasscodeLockIfNeededWithTouchID:(BOOL)useTouchID;
+- (void)showPasscodeLockIfNeededWithBiometrics:(BOOL)useBiometrics;
 
 @end

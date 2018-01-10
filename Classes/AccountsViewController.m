@@ -55,13 +55,37 @@
 	self.navigationItem.backBarButtonItem = backButton;
 	
 	self.refreshButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(downloadReports:)];
-	UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Settings", nil) style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
+	
+	UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Gear"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
+	
 	UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+	
+	UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 44.0f)];
+	statusLabel.font = [UIFont systemFontOfSize:14.0f];
+	statusLabel.backgroundColor = [UIColor clearColor];
+	statusLabel.textColor = [UIColor grayColor];
+	statusLabel.textAlignment = NSTextAlignmentCenter;
+	UIBarButtonItem *statusItem = [[UIBarButtonItem alloc] initWithCustomView:statusLabel];
+	
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
+		NSString *currentBuild = AboutViewController.currentBuild;
+		NSString *latestBuild = AboutViewController.latestBuild;
+		if ((latestBuild != nil) && (currentBuild.integerValue < latestBuild.integerValue)) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				statusLabel.text = NSLocalizedString(@"UPDATE AVAILABLE", nil);
+			});
+		}
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+		});
+	});
+	
 	UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
 	[infoButton addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
 	UIBarButtonItem *infoButtonItem = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
 	
-	self.toolbarItems = @[infoButtonItem, flexSpace, settingsButtonItem];
+	self.toolbarItems = @[infoButtonItem, flexSpace, statusItem, flexSpace, settingsButtonItem];
 	self.navigationItem.rightBarButtonItem = refreshButtonItem;
 	
 	self.title = NSLocalizedString(@"AppSales", nil);
@@ -108,24 +132,23 @@
 
 - (void)downloadReports:(id)sender {
 	for (ASAccount *account in self.accounts) {
-		if (account.accessToken && account.accessToken.length > 0) { // Only download reports for accounts with a login.
+		if (account.accessToken && account.accessToken.length > 0) { // Only download reports for accounts with an access token.
 			if (!account.vendorID || account.vendorID.length == 0) {
 				[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Vendor ID Missing", nil) 
-											 message:[NSString stringWithFormat:NSLocalizedString(@"You have not entered a vendor ID for the account \"%@\". Please go to the account's settings and fill in the missing information.", nil), [account displayName]] 
+											 message:[NSString stringWithFormat:NSLocalizedString(@"You have not entered a vendor ID for the account \"%@\". Please go to the account's settings and fill in the missing information.", nil), account.displayName]
 											delegate:nil 
 								   cancelButtonTitle:NSLocalizedString(@"OK", nil) 
-                                  otherButtonTitles:nil] show];
-            } else {
-                [[ReportDownloadCoordinator sharedReportDownloadCoordinator] downloadReportsForAccount:account];
-            }
-        } else {
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Access Token Missing", nil)
-                                        message:[NSString stringWithFormat:NSLocalizedString(@"Access token not set for the account \"%@\". Please go to the account's settings and fill in the missing information.", nil), account.displayName]
-                                       delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                              otherButtonTitles:nil] show];
-
-        }
+								   otherButtonTitles:nil] show];
+			} else {
+				[[ReportDownloadCoordinator sharedReportDownloadCoordinator] downloadReportsForAccount:account];
+			}
+		} else {
+			[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Access Token Missing", nil)
+										message:[NSString stringWithFormat:NSLocalizedString(@"Access token not set for the account \"%@\". Please go to the account's settings and fill in the missing information.", nil), account.displayName]
+									   delegate:nil
+							  cancelButtonTitle:NSLocalizedString(@"OK", nil)
+							  otherButtonTitles:nil] show];
+		}
 	}
 }
 

@@ -2,18 +2,22 @@
 //  ReviewListViewController.h
 //  AppSales
 //
-//  Created by Ole Zorn on 27.07.11.
-//  Copyright 2011 omz:software. All rights reserved.
+//  Created by Nicolas Gomollon on 6/21/17.
+//
 //
 
 #import <UIKit/UIKit.h>
+#import "ReviewListHeaderView.h"
 
-@class Product, Version;
+@class Product, ReviewListHeaderView, ReviewFilter, ReviewFilterViewController;
 
-@interface ReviewListViewController : UITableViewController <NSFetchedResultsControllerDelegate> {
+@interface ReviewListViewController : UITableViewController <NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, ReviewListHeaderViewDataSource> {
 	Product *product;
-	NSArray<Version *> *versions;
-	NSUInteger rating;
+	ReviewListHeaderView *headerView;
+	
+	NSMutableArray<ReviewFilter *> *filters;
+	ReviewFilterViewController *reviewFilter;
+	UIBarButtonItem *filterButton;
 	
 	NSFetchedResultsController *fetchedResultsController;
 	NSManagedObjectContext *managedObjectContext;
@@ -22,6 +26,6 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
-- (instancetype)initWithProduct:(Product *)_product versions:(NSArray<Version *> *)_versions rating:(NSUInteger)ratingFilter;
+- (instancetype)initWithProduct:(Product *)_product;
 
 @end
