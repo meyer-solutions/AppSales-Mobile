@@ -363,6 +363,9 @@
 //                NSLog(@"%@",error);
 //            }
 //        }
+        
+        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:&error];
+        
         if (![[NSFileManager defaultManager] copyItemAtURL:docURL toURL:storeURL error:&error]) {
             NSLog(@"%@",error);
         }

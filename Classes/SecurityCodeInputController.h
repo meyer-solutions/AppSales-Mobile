@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+@import SafariServices;
 
 @protocol SecurityCodeInputControllerDelegate <NSObject>
 
@@ -36,10 +37,13 @@ typedef NS_ENUM(NSUInteger, SCInputType) {
 	UILabel *digit6;
 	NSMutableArray *digits;
 	
+    UIButton* phoneButton;
+    
 	NSLayoutConstraint *digitViewCenterYConstraint;
 }
 
 @property (nonatomic, strong) id<SecurityCodeInputControllerDelegate> delegate;
+@property (nonatomic, copy) NSString* cantUsePhoneNumberUrl;
 
 - (instancetype)initWithType:(SCInputType)_inputType;
 - (void)show;

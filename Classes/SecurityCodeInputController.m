@@ -8,6 +8,9 @@
 
 #import "SecurityCodeInputController.h"
 
+@interface SecurityCodeInputController () <SFSafariViewControllerDelegate>
+@end
+
 @implementation SecurityCodeInputController
 
 - (instancetype)init {
@@ -62,6 +65,46 @@
 			digit6 = self.digitLabel;
 			[digitView addSubview:digit6];
 			[digits addObject:digit6];
+            
+            phoneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            phoneButton.translatesAutoresizingMaskIntoConstraints = NO;
+            [phoneButton setTitle:@"SMS" forState:UIControlStateNormal];
+            phoneButton.hidden = YES;
+            [phoneButton addTarget:self action:@selector(openSMS) forControlEvents:UIControlEventTouchUpInside];
+            
+            [self.view addSubview:phoneButton];
+            
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:phoneButton
+                                                                  attribute:NSLayoutAttributeWidth
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:nil
+                                                                  attribute:NSLayoutAttributeNotAnAttribute
+                                                                 multiplier:1.0f
+                                                                   constant:200]];
+            
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:phoneButton
+                                                                  attribute:NSLayoutAttributeCenterX
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.view
+                                                                  attribute:NSLayoutAttributeCenterX
+                                                                 multiplier:1.0f
+                                                                   constant:0.0f]];
+            
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:phoneButton
+                                                                  attribute:NSLayoutAttributeCenterY
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.view
+                                                                  attribute:NSLayoutAttributeCenterY
+                                                                 multiplier:1.0f
+                                                                   constant:0.0f]];
+            
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:phoneButton
+                                                                  attribute:NSLayoutAttributeHeight
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:nil
+                                                                  attribute:NSLayoutAttributeNotAnAttribute
+                                                                 multiplier:1.0f
+                                                                   constant:50.0f]];
 		}
 		
 		
@@ -80,6 +123,7 @@
 																				  options:0
 																				  metrics:@{@"w": @(digitWidth), @"p": @(digitPadding)}
 																					views:@{@"digit1": digit1, @"digit2": digit2, @"digit3": digit3, @"digit4": digit4}]];
+                
 				break;
 			}
 			
@@ -91,6 +135,9 @@
 																				  options:0
 																				  metrics:@{@"w": @(digitWidth), @"p": @(digitPadding), @"m": @(digitPadding * 3.0f)}
 																					views:@{@"digit1": digit1, @"digit2": digit2, @"digit3": digit3, @"digit4": digit4, @"digit5": digit5, @"digit6": digit6}]];
+                
+                phoneButton.hidden = NO;
+                
 				break;
 			}
 			
@@ -168,6 +215,13 @@
 		[self.view addConstraint:digitViewCenterYConstraint];
 	}
 	return self;
+}
+
+- (void)openSMS {
+    SFSafariViewController *safariVC = [[SFSafariViewController alloc]initWithURL:[NSURL URLWithString:self.cantUsePhoneNumberUrl] entersReaderIfAvailable:NO];
+    safariVC.delegate = self;
+    [self presentViewController:safariVC animated:NO completion:nil];
+    
 }
 
 - (void)viewDidLayoutSubviews {
