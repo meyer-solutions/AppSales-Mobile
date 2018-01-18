@@ -20,7 +20,7 @@ NSString *const kITCReporterBaseURL            = @"https://reportingitc-reporter
 NSString *const kITCReporterServiceAction      = @"/reportservice/%@/v1";
 NSString *const kITCReporterServiceTypeSales   = @"sales";
 NSString *const kITCReporterServiceTypeFinance = @"finance";
-NSString *const kITCReporterServiceBody        = @"[p=Reporter.properties, m=Robot.XML, %@]";
+NSString *const kITCReporterServiceBody        = @"[p=Reporter.properties, m=Robot.XML, a=%@, %@]";
 
 static NSString *NSStringPercentEscaped(NSString *string) {
 	return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)string, NULL, CFSTR("!*'();:@&=+$,/?%#[]"), kCFStringEncodingUTF8));
@@ -52,7 +52,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 		NSInteger numberOfReportsDownloaded = 0;
 		[self downloadProgress:0.0f withStatus:NSLocalizedString(@"Starting download", nil)];
 
-		NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] init];
+		NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
 		moc.persistentStoreCoordinator = psc;
 		moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
 
@@ -156,11 +156,12 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 				}
 
 				NSString *query = [NSString stringWithFormat:@"%@.getReport, %@,%@,Summary,%@,%@", salesKey, vendorID, salesKey, dateType, reportDateString];
-
+                NSString* accountNo = @"15949";
+                
 				NSDictionary *getReportData = @{@"accesstoken": NSStringPercentEscaped(accessToken),
 												@"version":     kITCReporterVersion,
 												@"mode":        kITCReporterMode,
-												@"queryInput":  NSStringPercentEscaped([NSString stringWithFormat:kITCReporterServiceBody, query]),
+												@"queryInput":  NSStringPercentEscaped([NSString stringWithFormat:kITCReporterServiceBody, accountNo, query]),
 												@"salesurl":    NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeSales]),
 												@"financeurl":  NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeFinance]),
 												};
