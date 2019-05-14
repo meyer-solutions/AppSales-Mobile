@@ -8,7 +8,7 @@
 
 #import "AboutViewController.h"
 
-NSString *const kAppGitHubRepoInfoPLIST = @"https://gitcdn.xyz/repo/nicolasgomollon/AppSales-Mobile/master/Support/AppSales-Info.plist";
+NSString *const kAppGitHubRepoInfoPLIST = @"https://gitcdn.xyz/repo/meyer-solutions/AppSales-Mobile/master/Support/AppSales-Info.plist";
 
 @implementation AboutViewController
 
