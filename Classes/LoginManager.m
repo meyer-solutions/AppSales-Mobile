@@ -142,14 +142,36 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 	[signInRequest setValue:kAppleAuthWidgetValue forHTTPHeaderField:kAppleAuthWidgetKey];
 	[signInRequest setValue:kAppleAuthAcceptValue forHTTPHeaderField:kAppleAuthAcceptKey];
 	[signInRequest setValue:kAppleAuthContentTypeValue forHTTPHeaderField:kAppleAuthContentTypeKey];
+    [signInRequest setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
 	[signInRequest setHTTPBody:bodyData];
 	
 	NSHTTPURLResponse *signInResponse = nil;
-	[NSURLConnection sendSynchronousRequest:signInRequest returningResponse:&signInResponse error:nil];
+    NSError* error = nil;
+    [NSURLConnection sendSynchronousRequest:signInRequest returningResponse:&signInResponse error:&error];
 	NSString *location = signInResponse.allHeaderFields[kAppleAuthLocationKey];
 	appleAuthSessionId = signInResponse.allHeaderFields[kAppleAuthSessionIdKey];
 	appleAuthScnt = signInResponse.allHeaderFields[kAppleAuthScntKey];
 	
+    NSLog(@"error: %@", error);
+    
+    // select team
+    /*
+    NSDictionary *bodyDict2 = @{@"contentProviderId": @(15949),
+                                @"dsId":@"142800777"};
+    NSData *bodyData2 = [NSJSONSerialization dataWithJSONObject:bodyDict2 options:0 error:nil];
+    
+    NSURL *teamURL = [NSURL URLWithString:[kITCBaseURL stringByAppendingString:@"/ra/v1/session/webSession"]];
+    NSMutableURLRequest *teamURLRequest = [NSMutableURLRequest requestWithURL:teamURL];
+    [teamURLRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [teamURLRequest setHTTPMethod:@"POST"];
+    [teamURLRequest setHTTPBody:bodyData2];
+    
+    NSHTTPURLResponse *teamResponse = nil;
+    [NSURLConnection sendSynchronousRequest:teamURLRequest returningResponse:&teamResponse error:&error];
+    
+    NSLog(@"%@, %@", teamResponse, error);
+    */
+    
 	if ((appleAuthSessionId.length == 0) || (appleAuthScnt.length == 0)) {
 		// Wrong credentials?
 		if ([self.delegate respondsToSelector:@selector(loginFailed)]) {

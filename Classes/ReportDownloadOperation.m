@@ -20,7 +20,7 @@ NSString *const kITCReporterBaseURL            = @"https://reportingitc-reporter
 NSString *const kITCReporterServiceAction      = @"/reportservice/%@/v1";
 NSString *const kITCReporterServiceTypeSales   = @"sales";
 NSString *const kITCReporterServiceTypeFinance = @"finance";
-NSString *const kITCReporterServiceBody        = @"[p=Reporter.properties, m=Robot.XML, a=%@, %@]";
+NSString *const kITCReporterServiceBody        = @"[p=Reporter.properties, m=Robot.XML, %@]";
 
 static NSString *NSStringPercentEscaped(NSString *string) {
 	return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)string, NULL, CFSTR("!*'();:@&=+$,/?%#[]"), kCFStringEncodingUTF8));
@@ -161,7 +161,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 				NSDictionary *getReportData = @{@"accesstoken": NSStringPercentEscaped(accessToken),
 												@"version":     kITCReporterVersion,
 												@"mode":        kITCReporterMode,
-												@"queryInput":  NSStringPercentEscaped([NSString stringWithFormat:kITCReporterServiceBody, accountNo, query]),
+												@"queryInput":  NSStringPercentEscaped([NSString stringWithFormat:kITCReporterServiceBody, query]),
 												@"salesurl":    NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeSales]),
 												@"financeurl":  NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeFinance]),
 												};
@@ -323,7 +323,8 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 			NSURL *userDetailURL = [NSURL URLWithString:[kITCBaseURL stringByAppendingString:kITCUserDetailAction]];
 			NSData *userDetailData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:userDetailURL] returningResponse:nil error:nil];
 			NSDictionary *userDetail = [NSJSONSerialization JSONObjectWithData:userDetailData options:0 error:nil];
-			contentProviderId = userDetail[@"data"][@"contentProviderId"];
+            NSLog(@"%@",userDetail);
+            contentProviderId = userDetail[@"data"][@"contentProviderId"];
 
 			if (self.isCancelled) {
 				[self completeDownloadWithStatus:NSLocalizedString(@"Canceled", nil)];

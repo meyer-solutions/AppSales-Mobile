@@ -80,7 +80,7 @@
 					NSURL *userDetailURL = [NSURL URLWithString:[kITCBaseURL stringByAppendingString:kITCUserDetailAction]];
 					NSData *userDetailData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:userDetailURL] returningResponse:nil error:nil];
 					NSDictionary *userDetail = [NSJSONSerialization JSONObjectWithData:userDetailData options:0 error:nil];
-					NSString *contentProviderId = userDetail[@"data"][@"contentProviderId"];
+                    NSString *contentProviderId = userDetail[@"data"][@"contentProviderId"];
 					
 					if (contentProviderId.length > 0) {
 						NSURL *paymentVendorsURL = [NSURL URLWithString:[kITCBaseURL stringByAppendingFormat:kITCPaymentVendorsAction, contentProviderId]];
