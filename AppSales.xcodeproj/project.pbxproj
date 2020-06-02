@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4509175323CF7E990028AF83 /* About_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = 4509175223CF7E990028AF83 /* About_dark.html */; };
-		4509175523CFBD1A0028AF83 /* ReviewTemplate_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = 4509175423CFBD1A0028AF83 /* ReviewTemplate_dark.html */; };
-		4509175A23D030130028AF83 /* DarkModeCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4509175923D030130028AF83 /* DarkModeCheck.m */; };
+        4509175323CF7E990028AF83 /* About_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = 4509175223CF7E990028AF83 /* About_dark.html */; };
+        4509175523CFBD1A0028AF83 /* ReviewTemplate_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = 4509175423CFBD1A0028AF83 /* ReviewTemplate_dark.html */; };
+        4509175A23D030130028AF83 /* DarkModeCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4509175923D030130028AF83 /* DarkModeCheck.m */; };
+        45C2B2222460296200C84374 /* csv_dark.css in Resources */ = {isa = PBXBuildFile; fileRef = 45C2B2202460296200C84374 /* csv_dark.css */; };
+        45C2B2232460296200C84374 /* csv.css in Resources */ = {isa = PBXBuildFile; fileRef = 45C2B2212460296200C84374 /* csv.css */; };
 		62E09F1B19E693F3002917FE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62E09F1A19E693F3002917FE /* Images.xcassets */; };
 		6D81575414CB3C2B005E8F3F /* KKKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574914CB3C2B005E8F3F /* KKKeychain.m */; };
 		6D81575514CB3C2B005E8F3F /* KKPasscodeLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574B14CB3C2B005E8F3F /* KKPasscodeLock.m */; };
@@ -123,15 +125,15 @@
 		DAFC5F801C16B29D00261B16 /* ReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F7F1C16B29D00261B16 /* ReviewsViewController.m */; };
 		DAFC5F931C16BFAD00261B16 /* Review.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F921C16BFAD00261B16 /* Review.m */; };
 		DAFC5F961C16C07100261B16 /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F951C16C07100261B16 /* Version.m */; };
-		F8D511121E3A1F5700CE7B4B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D511101E3A1F5700CE7B4B /* Fabric.framework */; };
-		F8D511131E3A1F5700CE7B4B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D511111E3A1F5700CE7B4B /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4509175223CF7E990028AF83 /* About_dark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About_dark.html; sourceTree = "<group>"; };
-		4509175423CFBD1A0028AF83 /* ReviewTemplate_dark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ReviewTemplate_dark.html; sourceTree = "<group>"; };
-		4509175823D030130028AF83 /* DarkModeCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DarkModeCheck.h; sourceTree = "<group>"; };
-		4509175923D030130028AF83 /* DarkModeCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DarkModeCheck.m; sourceTree = "<group>"; };
+        4509175223CF7E990028AF83 /* About_dark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About_dark.html; sourceTree = "<group>"; };
+        4509175423CFBD1A0028AF83 /* ReviewTemplate_dark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ReviewTemplate_dark.html; sourceTree = "<group>"; };
+        4509175823D030130028AF83 /* DarkModeCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DarkModeCheck.h; sourceTree = "<group>"; };
+        4509175923D030130028AF83 /* DarkModeCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DarkModeCheck.m; sourceTree = "<group>"; };
+        45C2B2202460296200C84374 /* csv_dark.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = csv_dark.css; sourceTree = "<group>"; };
+        45C2B2212460296200C84374 /* csv.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = csv.css; sourceTree = "<group>"; };
 		62E09F1A19E693F3002917FE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AppSales/Images.xcassets; sourceTree = "<group>"; };
 		6D81574814CB3C2B005E8F3F /* KKKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKKeychain.h; sourceTree = "<group>"; };
 		6D81574914CB3C2B005E8F3F /* KKKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKKeychain.m; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 		7FDF727C13DAAF2900B8CC4E /* ReportCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCollection.m; sourceTree = "<group>"; };
 		7FED633913DB69EA00DF33B1 /* GlobalSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalSettings.h; sourceTree = "<group>"; };
 		AE778A141E2EB6F200DAA6B7 /* AppSales 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppSales 5.xcdatamodel"; sourceTree = "<group>"; };
+		DA1BC9E62456123100A36B92 /* AppSales 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppSales 7.xcdatamodel"; sourceTree = "<group>"; };
 		DA2231A01DB318C7009071A3 /* SAMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SAMKeychain.h; path = Vendor/SAMKeychain/Sources/SAMKeychain.h; sourceTree = SOURCE_ROOT; };
 		DA2231A11DB318C7009071A3 /* SAMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SAMKeychain.m; path = Vendor/SAMKeychain/Sources/SAMKeychain.m; sourceTree = SOURCE_ROOT; };
 		DA2231A21DB318C7009071A3 /* SAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SAMKeychainQuery.h; path = Vendor/SAMKeychain/Sources/SAMKeychainQuery.h; sourceTree = SOURCE_ROOT; };
@@ -338,10 +341,6 @@
 		DAFC5F921C16BFAD00261B16 /* Review.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Review.m; sourceTree = "<group>"; };
 		DAFC5F941C16C07100261B16 /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
 		DAFC5F951C16C07100261B16 /* Version.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
-		F89772D31E1A998A00DCF613 /* AppSalesMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = AppSalesMobile.entitlements; path = AppSales/AppSalesMobile.entitlements; sourceTree = "<group>"; };
-		F8B531791FB1E9F60038B086 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
-		F8D511101E3A1F5700CE7B4B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		F8D511111E3A1F5700CE7B4B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,7 +349,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F709D2C13BC98860008DBAD /* UIKit.framework in Frameworks */,
-				F8D511121E3A1F5700CE7B4B /* Fabric.framework in Frameworks */,
 				7FD2C1EB13CE486A002868C7 /* QuartzCore.framework in Frameworks */,
 				7F709D6E13BCC4270008DBAD /* Security.framework in Frameworks */,
 				7F709D3013BC98860008DBAD /* CoreGraphics.framework in Frameworks */,
@@ -359,7 +357,6 @@
 				7F3796CC13F8245800FA6E49 /* MessageUI.framework in Frameworks */,
 				DA4357FC1C113B670056702C /* LocalAuthentication.framework in Frameworks */,
 				7F3796CD13F8246200FA6E49 /* libz.dylib in Frameworks */,
-				F8D511131E3A1F5700CE7B4B /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,7 +444,6 @@
 		7F709D1C13BC98860008DBAD = {
 			isa = PBXGroup;
 			children = (
-				F89772D31E1A998A00DCF613 /* AppSalesMobile.entitlements */,
 				62E09F1A19E693F3002917FE /* Images.xcassets */,
 				DA7B08E01C154CFB00BEAB57 /* FlagKit.xcassets */,
 				DA9DB1B81C101FB2007B0178 /* LaunchScreen.storyboard */,
@@ -470,9 +466,6 @@
 		7F709D2A13BC98860008DBAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F8B531791FB1E9F60038B086 /* SafariServices.framework */,
-				F8D511101E3A1F5700CE7B4B /* Fabric.framework */,
-				F8D511111E3A1F5700CE7B4B /* Crashlytics.framework */,
 				7F1499CC13BE172300D89064 /* libz.dylib */,
 				DA4357FB1C113B670056702C /* LocalAuthentication.framework */,
 				7F3796C913F8244000FA6E49 /* MessageUI.framework */,
@@ -498,8 +491,10 @@
 				7FDF6E8213D89B1000B8CC4E /* countries_simple.plist */,
 				7F26DF9313E1358B001D0F33 /* ReviewTemplate.html */,
 				4509175423CFBD1A0028AF83 /* ReviewTemplate_dark.html */,
-				7FAEB68E13E75AFF00750788 /* About.html */,
-				4509175223CF7E990028AF83 /* About_dark.html */,
+                7FAEB68E13E75AFF00750788 /* About.html */,
+                4509175223CF7E990028AF83 /* About_dark.html */,
+                45C2B2202460296200C84374 /* csv_dark.css */,
+                45C2B2212460296200C84374 /* csv.css */,
 			);
 			name = "Supporting Files";
 			path = Support;
@@ -643,8 +638,8 @@
 				7F454F9F13D5C24F00AE47D1 /* UIColor+Extensions.m */,
 				7FAEB66F13E6D3AB00750788 /* UIImage+Tinting.h */,
 				7FAEB67013E6D3AB00750788 /* UIImage+Tinting.m */,
-				4509175823D030130028AF83 /* DarkModeCheck.h */,
-				4509175923D030130028AF83 /* DarkModeCheck.m */,
+                4509175823D030130028AF83 /* DarkModeCheck.h */,
+                4509175923D030130028AF83 /* DarkModeCheck.m */,
 				DA4984451C12C85F009BFC8F /* UIViewController+Orientation.h */,
 				DA4984461C12C85F009BFC8F /* UIViewController+Orientation.m */,
 			);
@@ -852,7 +847,6 @@
 				7F709D2313BC98860008DBAD /* Sources */,
 				7F709D2413BC98860008DBAD /* Frameworks */,
 				7F709D2513BC98860008DBAD /* Resources */,
-				F8D5110F1E3A1F3200CE7B4B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -874,22 +868,18 @@
 				TargetAttributes = {
 					7F709D2613BC98860008DBAD = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = ZDQPQQ9Z48;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-						};
+						DevelopmentTeam = 32E8LZUD4E;
 					};
 				};
 			};
 			buildConfigurationList = 7F709D2113BC98860008DBAD /* Build configuration list for PBXProject "AppSales" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				English,
 				en,
+				Base,
 			);
 			mainGroup = 7F709D1C13BC98860008DBAD;
 			productRefGroup = 7F709D2813BC98860008DBAD /* Products */;
@@ -908,21 +898,23 @@
 			files = (
 				7F0BF5D413D3154F0063A6B0 /* TopBackground.png in Resources */,
 				7F0BF5DA13D3317D0063A6B0 /* ShadowTop.png in Resources */,
-				4509175523CFBD1A0028AF83 /* ReviewTemplate_dark.html in Resources */,
+                4509175523CFBD1A0028AF83 /* ReviewTemplate_dark.html in Resources */,
 				7F0BF5DB13D3317D0063A6B0 /* ShadowBottom.png in Resources */,
 				7FDF6E8113D8962500B8CC4E /* countries.plist in Resources */,
 				DAD39BA71EEC9B3100CB3524 /* passcode_square_filled@3x.png in Resources */,
 				7FDF6E8313D89B1000B8CC4E /* countries_simple.plist in Resources */,
 				DA9DB1B91C101FB2007B0178 /* LaunchScreen.storyboard in Resources */,
 				DA2995CD1C120E4C0009D4F1 /* Icon216.png in Resources */,
-				4509175323CF7E990028AF83 /* About_dark.html in Resources */,
+                4509175323CF7E990028AF83 /* About_dark.html in Resources */,
 				62E09F1B19E693F3002917FE /* Images.xcassets in Resources */,
 				7FAB533413DD0F9A0027274F /* country_names.plist in Resources */,
 				DAD39BA51EEC9B2D00CB3524 /* passcode_square_empty@3x.png in Resources */,
+                45C2B2222460296200C84374 /* csv_dark.css in Resources */,
 				DA2231A71DB318CC009071A3 /* SAMKeychain.bundle in Resources */,
 				DA7B08E11C154CFB00BEAB57 /* FlagKit.xcassets in Resources */,
 				7F89BCE313DFB4F1001C607F /* stores.plist in Resources */,
 				7F26DF9413E1358B001D0F33 /* ReviewTemplate.html in Resources */,
+                45C2B2232460296200C84374 /* csv.css in Resources */,
 				7FAEB68F13E75B0000750788 /* About.html in Resources */,
 				6D81576514CB44BE005E8F3F /* passcode_square_empty.png in Resources */,
 				6D81576614CB44BE005E8F3F /* passcode_square_empty@2x.png in Resources */,
@@ -932,22 +924,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		F8D5110F1E3A1F3200CE7B4B /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run b350bddd611d040900cab9452afda1c29c74c08b 67177a307dccf818341e626aa23de705f2801016a7510fa5ee9192b17fa9c691";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7F709D2313BC98860008DBAD /* Sources */ = {
@@ -972,7 +948,7 @@
 				7F1499E113BE544F00D89064 /* ReportDownloadCoordinator.m in Sources */,
 				DA4AC6A31EF9CBB4003CAF4D /* ReviewFilter.m in Sources */,
 				7F06B6BF13BF73C8004DB170 /* Report.m in Sources */,
-				4509175A23D030130028AF83 /* DarkModeCheck.m in Sources */,
+                4509175A23D030130028AF83 /* DarkModeCheck.m in Sources */,
 				7F1B14F313C51ACA00243AA3 /* CurrencyManager.m in Sources */,
 				7F1B153713C8029700243AA3 /* ReportImportOperation.m in Sources */,
 				7F6BC9AB13CB64DB00286A1E /* GraphView.m in Sources */,
@@ -1142,20 +1118,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = AppSales/AppSalesMobile.entitlements;
-				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
+				DEVELOPMENT_TEAM = 32E8LZUD4E;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Support/AppSales-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MARKETING_VERSION = 3.6;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.meyer-solutions.AppSalesMobile";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.omzsoftware.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = AppSalesMobile;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1170,19 +1139,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = AppSales/AppSalesMobile.entitlements;
-				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
+				DEVELOPMENT_TEAM = 32E8LZUD4E;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Support/AppSales-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MARKETING_VERSION = 3.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.meyer-solutions.AppSalesMobile";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.omzsoftware.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = AppSalesMobile;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1218,6 +1180,7 @@
 		7F709D3F13BC98860008DBAD /* AppSales.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				DA1BC9E62456123100A36B92 /* AppSales 7.xcdatamodel */,
 				DA3DF5F01EF1D6CA00CBEF87 /* AppSales 6.xcdatamodel */,
 				AE778A141E2EB6F200DAA6B7 /* AppSales 5.xcdatamodel */,
 				DAFC5F841C16B89F00261B16 /* AppSales 4.xcdatamodel */,
@@ -1225,7 +1188,7 @@
 				7F0B8A6B13F7B776006E9151 /* AppSales 2.xcdatamodel */,
 				7F709D4013BC98860008DBAD /* AppSales.xcdatamodel */,
 			);
-			currentVersion = DA3DF5F01EF1D6CA00CBEF87 /* AppSales 6.xcdatamodel */;
+			currentVersion = DA1BC9E62456123100A36B92 /* AppSales 7.xcdatamodel */;
 			path = AppSales.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

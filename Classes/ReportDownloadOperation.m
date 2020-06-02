@@ -34,6 +34,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 	self = [super init];
 	if (self) {
 		accessToken = [account.accessToken copy];
+		providerID = [account.providerID copy];
 		_account = account;
 		accountObjectID = [account.objectID copy];
 		psc = [account.managedObjectContext persistentStoreCoordinator];
@@ -52,7 +53,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 		NSInteger numberOfReportsDownloaded = 0;
 		[self downloadProgress:0.0f withStatus:NSLocalizedString(@"Starting download", nil)];
 
-		NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+		NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] init];
 		moc.persistentStoreCoordinator = psc;
 		moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
 
@@ -92,7 +93,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 			NSMutableArray *availableReportDateStrings = [NSMutableArray array];
 			NSMutableSet *availableReportDates = [NSMutableSet set];
 
-			NSInteger maxNumberOfAvailableReports = [dateType isEqualToString:@"Daily"] ? 31 : 20;
+			NSInteger maxNumberOfAvailableReports = [dateType isEqualToString:@"Daily"] ? 90 : 20;
 			for (int i = 1; i <= maxNumberOfAvailableReports; i++) {
 				NSDate *date = nil;
 				if ([dateType isEqualToString:@"Daily"]) {
@@ -155,9 +156,8 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 					}
 				}
 
-				NSString *query = [NSString stringWithFormat:@"%@.getReport, %@,%@,Summary,%@,%@", salesKey, vendorID, salesKey, dateType, reportDateString];
-                NSString* accountNo = @"15949";
-                
+				NSString *query = [NSString stringWithFormat:@"a=%@, %@.getReport, %@,%@,Summary,%@,%@", providerID, salesKey, vendorID, salesKey, dateType, reportDateString];
+
 				NSDictionary *getReportData = @{@"accesstoken": NSStringPercentEscaped(accessToken),
 												@"version":     kITCReporterVersion,
 												@"mode":        kITCReporterMode,
@@ -312,7 +312,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 	}
 }
 
-- (void)loginSucceeded {
+- (void)loginSucceeded:(LoginManager *)loginManager {
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
 		@autoreleasepool {
 
@@ -320,23 +320,14 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 
 			//==== Payments
 
-			NSURL *userDetailURL = [NSURL URLWithString:[kITCBaseURL stringByAppendingString:kITCUserDetailAction]];
-			NSData *userDetailData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:userDetailURL] returningResponse:nil error:nil];
-			NSDictionary *userDetail = [NSJSONSerialization JSONObjectWithData:userDetailData options:0 error:nil];
-            NSLog(@"%@",userDetail);
-            contentProviderId = userDetail[@"data"][@"contentProviderId"];
-
 			if (self.isCancelled) {
 				[self completeDownloadWithStatus:NSLocalizedString(@"Canceled", nil)];
-			} else if (contentProviderId.length > 0) {
-				NSURL *paymentVendorsURL = [NSURL URLWithString:[kITCBaseURL stringByAppendingFormat:kITCPaymentVendorsAction, contentProviderId]];
+			} else if (providerID.length > 0) {
+				NSURL *paymentVendorsURL = [NSURL URLWithString:[kITCBaseURL stringByAppendingFormat:kITCPaymentVendorsAction, providerID]];
 				NSData *paymentVendorsData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:paymentVendorsURL] returningResponse:nil error:nil];
 				NSDictionary *paymentVendors = [NSJSONSerialization JSONObjectWithData:paymentVendorsData options:0 error:nil];
 				NSArray *sapVendors = paymentVendors[@"data"];
-                if (![sapVendors isKindOfClass:[NSArray class]]) {
-                    sapVendors = @[];
-                }
-                
+
 				if (self.isCancelled) {
 					[self completeDownloadWithStatus:NSLocalizedString(@"Canceled", nil)];
 				} else if (sapVendors.count > 0) {
@@ -362,7 +353,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 	});
 }
 
-- (void)loginFailed {
+- (void)loginFailed:(LoginManager *)loginManager {
 	[self completeDownload];
 }
 
@@ -431,7 +422,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 					break;
 				}
 
-				NSURL *paymentURL = [NSURL URLWithString:[kITCBaseURL stringByAppendingFormat:kITCPaymentVendorsPaymentAction, contentProviderId, vendorID, year, month]];
+				NSURL *paymentURL = [NSURL URLWithString:[kITCBaseURL stringByAppendingFormat:kITCPaymentVendorsPaymentAction, providerID, vendorID, year, month]];
 				NSData *paymentData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:paymentURL] returningResponse:nil error:nil];
 				NSDictionary *payment = [NSJSONSerialization JSONObjectWithData:paymentData options:0 error:nil];
 				payment = payment[@"data"];
