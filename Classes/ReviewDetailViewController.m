@@ -41,7 +41,7 @@ NSString *const developerResponseRegex = @"(?s)(<h2 class=\"response-title\">).*
 - (void)loadView {
 	[super loadView];
 	
-	webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+	webView = [[WKWebView alloc] initWithFrame:CGRectZero];
     
     if (@available(iOS 13.0, *)) {
         webView.backgroundColor = [UIColor systemBackgroundColor];
@@ -51,8 +51,8 @@ NSString *const developerResponseRegex = @"(?s)(<h2 class=\"response-title\">).*
     }
     
 	webView.opaque = NO;
-	webView.scalesPageToFit = YES;
-	webView.dataDetectorTypes = UIDataDetectorTypeNone;
+	//webView.scalesPageToFit = YES;
+	//webView.dataDetectorTypes = UIDataDetectorTypeNone;
 	self.view = webView;
 }
 

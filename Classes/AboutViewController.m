@@ -40,7 +40,7 @@ NSString *const kAppGitHubRepoInfoPLIST = @"https://gitcdn.xyz/repo/meyer-soluti
 - (void)loadView {
 	self.title = NSLocalizedString(@"About", nil);
 	
-	webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+	webView = [[WKWebView alloc] initWithFrame:CGRectZero];
     
     if (@available(iOS 13.0, *)) {
         webView.backgroundColor = [UIColor systemBackgroundColor];
@@ -50,9 +50,9 @@ NSString *const kAppGitHubRepoInfoPLIST = @"https://gitcdn.xyz/repo/meyer-soluti
     }
     
 	webView.opaque = NO;
-	webView.scalesPageToFit = YES;
-	webView.dataDetectorTypes = UIDataDetectorTypeNone;
-	webView.delegate = self;
+	//webView.scalesPageToFit = YES;
+	//webView.dataDetectorTypes = UIDataDetectorTypeNone;
+    webView.navigationDelegate = self;
 	self.view = webView;
 	
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
@@ -94,12 +94,14 @@ NSString *const kAppGitHubRepoInfoPLIST = @"https://gitcdn.xyz/repo/meyer-soluti
 	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-		[[UIApplication sharedApplication] openURL:[request URL]];
-		return NO;
-	}
-	return YES;
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(nonnull WKNavigationAction *)navigationAction decisionHandler:(nonnull void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
+        [[UIApplication sharedApplication] openURL:[navigationAction.request URL]];
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 - (void)done:(id)sender {
@@ -107,7 +109,7 @@ NSString *const kAppGitHubRepoInfoPLIST = @"https://gitcdn.xyz/repo/meyer-soluti
 }
 
 - (void)dealloc {
-	webView.delegate = nil;
+//	webView.delegate = nil;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

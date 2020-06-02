@@ -25,10 +25,10 @@
 }
 
 - (void)loadView {
-	self.webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-	webView.scalesPageToFit = YES;
-	webView.dataDetectorTypes = UIDataDetectorTypeNone;
-	webView.delegate = self;
+	self.webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+	//webView.scalesPageToFit = YES;
+	//webView.dataDetectorTypes = UIDataDetectorTypeNone;
+	webView.navigationDelegate = self;
 	self.view = webView;
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Agree", nil) style:UIBarButtonItemStyleDone target:self action:@selector(agree:)];
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
@@ -58,16 +58,18 @@
 	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-		[[UIApplication sharedApplication] openURL:[request URL]];
-		return NO;
-	}
-	return YES;
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(nonnull WKNavigationAction *)navigationAction decisionHandler:(nonnull void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
+        [[UIApplication sharedApplication] openURL:[navigationAction.request URL]];
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-	[ASProgressHUD hideHUDForView:self.view animated:YES];
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [ASProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 - (void)done:(id)sender {
@@ -75,7 +77,7 @@
 }
 
 - (void)dealloc {
-	webView.delegate = nil;
+	//webView.delegate = nil;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

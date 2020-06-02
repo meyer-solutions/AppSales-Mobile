@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@import WebKit;
 
-@interface AboutViewController : UIViewController <UIWebViewDelegate> {
-	UIWebView *webView;
+@interface AboutViewController : UIViewController <WKNavigationDelegate> {
+	WKWebView *webView;
 }
 
 + (NSString *)appVersion;

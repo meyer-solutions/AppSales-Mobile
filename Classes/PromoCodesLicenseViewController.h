@@ -7,16 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@import WebKit;
 
 @class DownloadStepOperation;
 
-@interface PromoCodesLicenseViewController : UIViewController <UIWebViewDelegate> {
+@interface PromoCodesLicenseViewController : UIViewController <WKNavigationDelegate> {
 	NSString *licenseAgreementHTML;
 	DownloadStepOperation *downloadOperation;
-	UIWebView *webView;
+	WKWebView *webView;
 }
 
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 
 - (instancetype)initWithLicenseAgreement:(NSString *)licenseAgreement operation:(DownloadStepOperation *)operation;
 

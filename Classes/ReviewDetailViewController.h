@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+@import WebKit;
 
 @class Review;
 
 @interface ReviewDetailViewController : UIViewController <MFMailComposeViewControllerDelegate> {
 	NSArray<Review *> *reviews;
 	NSInteger index;
-	UIWebView *webView;
+	WKWebView *webView;
 	UIBarButtonItem *previousItem;
 	UIBarButtonItem *nextItem;
 	UIBarButtonItem *markItem;

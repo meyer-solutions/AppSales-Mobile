@@ -7,9 +7,6 @@
 //
 
 #import "AppSalesAppDelegate.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-
 
 #import "AccountsViewController.h"
 #import "CurrencyManager.h"
@@ -29,7 +26,7 @@
 @synthesize window, accountsViewController, accountsPopover;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [Fabric with:@[[Crashlytics class]]];
+    //[Fabric with:@[[Crashlytics class]]];
 
 	[[KKPasscodeLock sharedLock] setDefaultSettings];
 	[[KKPasscodeLock sharedLock] setEraseOption:NO];
