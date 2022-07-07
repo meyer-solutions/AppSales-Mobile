@@ -147,7 +147,8 @@ typedef NS_ENUM(NSInteger, AccessTokenAction) {
 				alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Access Token", nil)
 																	  message:message
 															   preferredStyle:UIAlertControllerStyleActionSheet];
-				
+                alertController.popoverPresentationController.sourceView = self.view;
+                
 				[alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", "") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 					dispatch_async(dispatch_get_main_queue(), ^{
 						successHandler(accessToken);
@@ -159,7 +160,8 @@ typedef NS_ENUM(NSInteger, AccessTokenAction) {
 				alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Access Token", nil)
 																	  message:nil
 															   preferredStyle:UIAlertControllerStyleActionSheet];
-				
+                alertController.popoverPresentationController.sourceView = self.view;
+                
 				[alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Generate…", "") style:UIAlertActionStyleDefault handler:generateAccessTokenBlock]];
 			}
 			
@@ -217,7 +219,8 @@ typedef NS_ENUM(NSInteger, AccessTokenAction) {
 			UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Select Your Primary Vendor", nil)
 																					 message:nil
 																			  preferredStyle:UIAlertControllerStyleActionSheet];
-			
+            alertController.popoverPresentationController.sourceView = self.view;
+            
 			for (NSString *vendorID in vendors) {
 				NSString *vendorName = vendors[vendorID];
 				NSString *buttonTitle = [NSString stringWithFormat:@"%@ (%@)", vendorName, vendorID];

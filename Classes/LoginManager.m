@@ -61,6 +61,7 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 	if (self) {
 		// Initialization code
 		account = _account;
+        loginInfo = [NSDictionary dictionaryWithObject:account.providerID forKey:kAccountProviderID];
 		authType = SCInputTypeUnknown;
 		dateFormatter = [[NSDateFormatter alloc] init];
 		dateFormatter.dateFormat = @"MMM dd, yyyy";
@@ -72,7 +73,12 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 	self = [super init];
 	if (self) {
 		// Initialization code
-		loginInfo = _loginInfo;
+        if (_loginInfo) {
+            loginInfo = _loginInfo;
+        } else {
+            loginInfo = [NSDictionary dictionaryWithObject:@"15949" forKey:kAccountProviderID];
+        }
+		
 		authType = SCInputTypeUnknown;
 		dateFormatter = [[NSDateFormatter alloc] init];
 		dateFormatter.dateFormat = @"MMM dd, yyyy";
@@ -279,7 +285,7 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 	provider = authSessionDict[@"provider"];
 	availableProviders = authSessionDict[@"availableProviders"];
 	
-	providerID = [(NSNumber *)provider[@"providerId"] description];
+    providerID = [(NSNumber *)provider[@"providerId"] description];
 	
 	if ((providerID == nil) || (providerID.length == 0) || (availableProviders == nil) || (availableProviders.count == 0)) {
 		// Failed to fetch available providers.
@@ -363,7 +369,8 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Select Your Primary Provider", nil)
 																			 message:nil
 																	  preferredStyle:UIAlertControllerStyleActionSheet];
-	
+    alertController.popoverPresentationController.sourceView = ((UIWindow*)[UIApplication sharedApplication].windows.firstObject);
+    
 	for (NSDictionary *provider in availableProviders) {
 		NSString *providerName = provider[@"name"];
 		NSString *providerID = [(NSNumber *)provider[@"providerId"] description];
@@ -506,7 +513,8 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Verify Your Identity", nil)
 																			 message:NSLocalizedString(@"Your Apple ID is protected with two-step verification.\nChoose a trusted device to receive a verification code.", nil)
 																	  preferredStyle:UIAlertControllerStyleActionSheet];
-	
+    alertController.popoverPresentationController.sourceView = ((UIWindow*)[UIApplication sharedApplication].windows.firstObject) ;
+
 	for (NSDictionary *trustedDevice in trustedDevices) {
 		NSNumber *isDevice = trustedDevice[@"device"];
 		NSString *deviceName = trustedDevice[@"name"];

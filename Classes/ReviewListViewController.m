@@ -168,7 +168,8 @@
 	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
 																			 message:nil
 																	  preferredStyle:UIAlertControllerStyleActionSheet];
-	
+    alertController.popoverPresentationController.sourceView = self.view;
+    
 	[alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Mark All Unread", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 		[self markAllReviewsUnread:YES];
 	}]];

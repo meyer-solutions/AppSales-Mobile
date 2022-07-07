@@ -285,7 +285,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 		}
 
 		BOOL downloadPayments = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDownloadPayments];
-		if (downloadPayments && ((numberOfReportsDownloaded > 0) || (account.payments.count == 0))) {
+		if (downloadPayments && ((numberOfReportsDownloaded >= 0) || (account.payments.count == 0))) {
 			[self downloadProgress:0.9f withStatus:NSLocalizedString(@"Loading payments...", nil)];
 
 			LoginManager *loginManager = [[LoginManager alloc] initWithAccount:_account];

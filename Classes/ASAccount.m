@@ -18,11 +18,19 @@
 @synthesize isDownloadingReports, downloadStatus, downloadProgress;
 
 - (NSString *)password {
+#if TARGET_OS_MACCATALYST
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kAccountKeychainiTunesConnect];
+#else
 	return [SAMKeychain passwordForService:kAccountKeychainiTunesConnect account:self.username];
+#endif
 }
 
 - (void)setPassword:(NSString *)password {
+#if TARGET_OS_MACCATALYST
+    [[NSUserDefaults standardUserDefaults] setObject:password forKey:kAccountKeychainiTunesConnect];
+#else
 	[SAMKeychain setPassword:password forService:kAccountKeychainiTunesConnect account:self.username];
+#endif
 }
 
 - (void)deletePassword {
@@ -30,11 +38,19 @@
 }
 
 - (NSString *)accessToken {
+#if TARGET_OS_MACCATALYST
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kAccountKeychainAppSalesMobile];
+#else
 	return [SAMKeychain passwordForService:kAccountKeychainAppSalesMobile account:self.username];
+#endif
 }
 
 - (void)setAccessToken:(NSString *)accessToken {
+#if TARGET_OS_MACCATALYST
+    [[NSUserDefaults standardUserDefaults] setObject:accessToken forKey:kAccountKeychainAppSalesMobile];
+#else
 	[SAMKeychain setPassword:accessToken forService:kAccountKeychainAppSalesMobile account:self.username];
+#endif
 }
 
 - (void)deleteAccessToken {
