@@ -24,35 +24,26 @@
 }
 
 - (void)loadView {
-    WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
-    self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:theConfiguration];
-    self.webView.navigationDelegate = self;
-    [self.webView setOpaque:NO];
-    
-    
-    if (@available(iOS 13.0, *)) {
-        [self.webView setBackgroundColor:[UIColor systemBackgroundColor]];
-    }
-    
+	WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
+	self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:theConfiguration];
+	self.webView.navigationDelegate = self;
+	[self.webView setOpaque:NO];
+	if (@available(iOS 13.0, *)) {
+		[self.webView setBackgroundColor:[UIColor systemBackgroundColor]];
+	}
+	
 	self.view = webView;
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sendReport:)];
 }
 
--(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    
-    if (@available(iOS 13.0, *)) {
-        NSURL *cssUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"csv" ofType:@"css"]];
-        if ([DarkModeCheck deviceIsInDarkMode] == YES) {
-            cssUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"csv_dark" ofType:@"css"]];
-        }
-        
-        NSString *cssString = [NSString stringWithContentsOfURL:cssUrl encoding:NSUTF8StringEncoding error:nil];
-        cssString = [cssString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSString *javascriptString = @"var style = document.createElement('style'); style.innerHTML = '%@'; document.head.appendChild(style)";
-        NSString *javascriptWithCSSString = [NSString stringWithFormat:javascriptString, cssString];
-        [self.webView evaluateJavaScript:javascriptWithCSSString completionHandler:nil];
-    }
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+	NSURL *cssUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"csv" ofType:@"css"]];
+	NSString *cssString = [NSString stringWithContentsOfURL:cssUrl encoding:NSUTF8StringEncoding error:nil];
+	cssString = [cssString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+	NSString *javascriptString = @"var style = document.createElement('style'); style.innerHTML = '%@'; document.head.appendChild(style)";
+	NSString *javascriptWithCSSString = [NSString stringWithFormat:javascriptString, cssString];
+	[self.webView evaluateJavaScript:javascriptWithCSSString completionHandler:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -74,10 +65,6 @@
 	[self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:tempPath]]];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)done:(id)sender {
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -89,8 +76,14 @@
 		filename = [filename substringToIndex:filename.length - 3];
 	}
 	
-	if (![MFMailComposeViewController canSendMail]) {
-		[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Email Account", nil) message:NSLocalizedString(@"You have not configured this device for sending email.", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+    if (![MFMailComposeViewController canSendMail]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"No Email Account", nil)
+                                                                       message:NSLocalizedString(@"You have not configured this device for sending email.", nil)
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                  style:UIAlertActionStyleCancel
+                                                handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
 	} else {
 		MFMailComposeViewController *vc = [[MFMailComposeViewController alloc] init];
 		[vc setSubject:filename];
@@ -105,7 +98,10 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-	return UIInterfaceOrientationMaskPortrait;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        return UIInterfaceOrientationMaskAll;
+    }
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 

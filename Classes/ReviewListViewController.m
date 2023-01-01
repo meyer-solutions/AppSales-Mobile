@@ -142,12 +142,15 @@
 	}]];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        return UIInterfaceOrientationMaskAll;
+    }
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (void)markAllReviewsUnread:(BOOL)unread {
-	NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] init];
+    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
 	moc.persistentStoreCoordinator = self.fetchedResultsController.managedObjectContext.persistentStoreCoordinator;
 	moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
 	
@@ -232,10 +235,6 @@
 	// Configure the cell...
 	Review *review = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	cell.review = review;
-    
-    if (@available(iOS 13.0, *)) {
-        cell.backgroundColor = [UIColor secondarySystemBackgroundColor];
-    }
 	
 	return cell;
 }

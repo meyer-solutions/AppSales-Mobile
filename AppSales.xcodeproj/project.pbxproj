@@ -7,11 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4509175323CF7E990028AF83 /* About_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = 4509175223CF7E990028AF83 /* About_dark.html */; };
-		4509175523CFBD1A0028AF83 /* ReviewTemplate_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = 4509175423CFBD1A0028AF83 /* ReviewTemplate_dark.html */; };
 		4509175A23D030130028AF83 /* DarkModeCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4509175923D030130028AF83 /* DarkModeCheck.m */; };
-		45C2B2222460296200C84374 /* csv_dark.css in Resources */ = {isa = PBXBuildFile; fileRef = 45C2B2202460296200C84374 /* csv_dark.css */; };
 		45C2B2232460296200C84374 /* csv.css in Resources */ = {isa = PBXBuildFile; fileRef = 45C2B2212460296200C84374 /* csv.css */; };
+		621D32432531C98C00D0EE97 /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 621D32422531C98C00D0EE97 /* UIViewController+Alert.m */; };
 		62E09F1B19E693F3002917FE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62E09F1A19E693F3002917FE /* Images.xcassets */; };
 		6D81575414CB3C2B005E8F3F /* KKKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574914CB3C2B005E8F3F /* KKKeychain.m */; };
 		6D81575514CB3C2B005E8F3F /* KKPasscodeLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574B14CB3C2B005E8F3F /* KKPasscodeLock.m */; };
@@ -25,7 +23,6 @@
 		7F0B8A6913F77F95006E9151 /* PromoCodeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B8A6813F77F95006E9151 /* PromoCodeOperation.m */; };
 		7F0B8A6E13F7B941006E9151 /* PromoCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B8A6D13F7B941006E9151 /* PromoCode.m */; };
 		7F0B8A7313F7E647006E9151 /* PromoCodesLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B8A7213F7E647006E9151 /* PromoCodesLicenseViewController.m */; };
-		7F0BF5D413D3154F0063A6B0 /* TopBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F0BF5D313D3154F0063A6B0 /* TopBackground.png */; };
 		7F0BF5DA13D3317D0063A6B0 /* ShadowTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F0BF5D813D3317D0063A6B0 /* ShadowTop.png */; };
 		7F0BF5DB13D3317D0063A6B0 /* ShadowBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F0BF5D913D3317D0063A6B0 /* ShadowBottom.png */; };
 		7F137EB313DDDABF004655D8 /* CountryDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F137EB213DDDABF004655D8 /* CountryDictionary.m */; };
@@ -87,6 +84,7 @@
 		7FDF6E8313D89B1000B8CC4E /* countries_simple.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FDF6E8213D89B1000B8CC4E /* countries_simple.plist */; };
 		7FDF727513D8E64D00B8CC4E /* ReportCSVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF727413D8E64D00B8CC4E /* ReportCSVViewController.m */; };
 		7FDF727D13DAAF2900B8CC4E /* ReportCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF727C13DAAF2900B8CC4E /* ReportCollection.m */; };
+		AEF5636A2531C9670012548E /* PaymentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF563692531C9670012548E /* PaymentDetailsViewController.m */; };
 		DA2231A41DB318C7009071A3 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2231A11DB318C7009071A3 /* SAMKeychain.m */; };
 		DA2231A51DB318C7009071A3 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2231A31DB318C7009071A3 /* SAMKeychainQuery.m */; };
 		DA2231A71DB318CC009071A3 /* SAMKeychain.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DA2231A61DB318CC009071A3 /* SAMKeychain.bundle */; };
@@ -125,133 +123,14 @@
 		DAFC5F801C16B29D00261B16 /* ReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F7F1C16B29D00261B16 /* ReviewsViewController.m */; };
 		DAFC5F931C16BFAD00261B16 /* Review.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F921C16BFAD00261B16 /* Review.m */; };
 		DAFC5F961C16C07100261B16 /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F951C16C07100261B16 /* Version.m */; };
-		F821BFA62632A65200F34009 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F709D3913BC98860008DBAD /* main.m */; };
-		F821BFA72632A65200F34009 /* AppSalesAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F709D3D13BC98860008DBAD /* AppSalesAppDelegate.m */; };
-		F821BFA82632A65200F34009 /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F951C16C07100261B16 /* Version.m */; };
-		F821BFA92632A65200F34009 /* ReporterParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8C71F21E00E4A100F7490B /* ReporterParser.m */; };
-		F821BFAA2632A65200F34009 /* AppSales.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F709D3F13BC98860008DBAD /* AppSales.xcdatamodeld */; };
-		F821BFAB2632A65200F34009 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F709D4613BC98860008DBAD /* AccountsViewController.m */; };
-		F821BFAC2632A65200F34009 /* FieldEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F709D6213BCB64F0008DBAD /* FieldEditorViewController.m */; };
-		F821BFAD2632A65200F34009 /* ReviewListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD53A571EFCF6ED0038C925 /* ReviewListHeaderView.m */; };
-		F821BFAE2632A65200F34009 /* SalesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F709D8B13BD03D30008DBAD /* SalesViewController.m */; };
-		F821BFAF2632A65200F34009 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4984401C12A884009BFC8F /* MBProgressHUD.m */; };
-		F821BFB02632A65200F34009 /* ASAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F709D8E13BD064D0008DBAD /* ASAccount.m */; };
-		F821BFB12632A65200F34009 /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1499C913BE15F500D89064 /* NSData+Compression.m */; };
-		F821BFB22632A65200F34009 /* ReportDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1499CF13BE311600D89064 /* ReportDownloadOperation.m */; };
-		F821BFB32632A65200F34009 /* SecurityCodeInputController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9DB1B41C0FEC48007B0178 /* SecurityCodeInputController.m */; };
-		F821BFB42632A65200F34009 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = DA4984331C129F95009BFC8F /* unzip.c */; };
-		F821BFB52632A65200F34009 /* ReportDownloadCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1499E013BE544F00D89064 /* ReportDownloadCoordinator.m */; };
-		F821BFB62632A65200F34009 /* ReviewFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC6A21EF9CBB4003CAF4D /* ReviewFilter.m */; };
-		F821BFB72632A65200F34009 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06B6BE13BF73C8004DB170 /* Report.m */; };
-		F821BFB82632A65200F34009 /* DarkModeCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4509175923D030130028AF83 /* DarkModeCheck.m */; };
-		F821BFB92632A65200F34009 /* CurrencyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B14F213C51AC900243AA3 /* CurrencyManager.m */; };
-		F821BFBA2632A65200F34009 /* ReportImportOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B153613C8029600243AA3 /* ReportImportOperation.m */; };
-		F821BFBB2632A65200F34009 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F6BC9AA13CB64DB00286A1E /* GraphView.m */; };
-		F821BFBC2632A65200F34009 /* WeeklyReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD2C1E013CDCB3C002868C7 /* WeeklyReport.m */; };
-		F821BFBD2632A65200F34009 /* DailyReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD2C1E413CDCB3D002868C7 /* DailyReport.m */; };
-		F821BFBE2632A65200F34009 /* DashboardAppCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F454F9013D5A56A00AE47D1 /* DashboardAppCell.m */; };
-		F821BFBF2632A65200F34009 /* ColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F454F9313D5B64F00AE47D1 /* ColorButton.m */; };
-		F821BFC02632A65200F34009 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F454F9913D5B97100AE47D1 /* Product.m */; };
-		F821BFC12632A65200F34009 /* CrayonColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F454F9C13D5C19C00AE47D1 /* CrayonColorPickerViewController.m */; };
-		F821BFC22632A65200F34009 /* UIColor+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F454F9F13D5C24F00AE47D1 /* UIColor+Extensions.m */; };
-		F821BFC32632A65200F34009 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2231A11DB318C7009071A3 /* SAMKeychain.m */; };
-		F821BFC42632A65200F34009 /* UIViewController+Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4984461C12C85F009BFC8F /* UIViewController+Orientation.m */; };
-		F821BFC52632A65200F34009 /* IconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F454FAD13D6496600AE47D1 /* IconManager.m */; };
-		F821BFC62632A65200F34009 /* ReportDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2946ED13D880260023F530 /* ReportDetailViewController.m */; };
-		F821BFC72632A65200F34009 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2946F013D8806E0023F530 /* MapView.m */; };
-		F821BFC82632A65200F34009 /* ReportCSVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF727413D8E64D00B8CC4E /* ReportCSVViewController.m */; };
-		F821BFC92632A65200F34009 /* ReviewFilterComparator.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD53A521EFC87630038C925 /* ReviewFilterComparator.m */; };
-		F821BFCA2632A65200F34009 /* ReportCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF727C13DAAF2900B8CC4E /* ReportCollection.m */; };
-		F821BFCB2632A65200F34009 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2231A31DB318C7009071A3 /* SAMKeychainQuery.m */; };
-		F821BFCC2632A65200F34009 /* ReviewFilterDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC6A81EFAF7A6003CAF4D /* ReviewFilterDetailViewController.m */; };
-		F821BFCD2632A65200F34009 /* AppleFiscalCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ECDB13DAFF120054FE6D /* AppleFiscalCalendar.m */; };
-		F821BFCE2632A65200F34009 /* StarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC6981EF7A1E2003CAF4D /* StarRatingView.m */; };
-		F821BFCF2632A65200F34009 /* AppIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAB532B13DCFA7D0027274F /* AppIconView.m */; };
-		F821BFD02632A65200F34009 /* ReportDetailEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4065C913DD379B006148AA /* ReportDetailEntryCell.m */; };
-		F821BFD12632A65200F34009 /* CountryDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F137EB213DDDABF004655D8 /* CountryDictionary.m */; };
-		F821BFD22632A65200F34009 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F398ED113DF21F2004BEC44 /* Transaction.m */; };
-		F821BFD32632A65200F34009 /* ReportDetailEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F398ED413DF570D004BEC44 /* ReportDetailEntry.m */; };
-		F821BFD42632A65200F34009 /* StatusToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC6BB1EFB9E2C003CAF4D /* StatusToolbar.m */; };
-		F821BFD52632A65200F34009 /* ReviewListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2C58313E0370B00BA9875 /* ReviewListViewController.m */; };
-		F821BFD62632A65200F34009 /* ReviewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F26DF9013E13319001D0F33 /* ReviewDetailViewController.m */; };
-		F821BFD72632A65200F34009 /* DeveloperResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3DF5FE1EF1D92900CBEF87 /* DeveloperResponse.m */; };
-		F821BFD82632A65200F34009 /* FilterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC69F1EF9AB8F003CAF4D /* FilterTableViewCell.m */; };
-		F821BFD92632A65200F34009 /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F24E70613E40A0D0056EA97 /* DashboardViewController.m */; };
-		F821BFDA2632A65200F34009 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = DA49842F1C129F95009BFC8F /* ioapi.c */; };
-		F821BFDB2632A65200F34009 /* Review.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F921C16BFAD00261B16 /* Review.m */; };
-		F821BFDC2632A65200F34009 /* ReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7D58F31C234D9700A3EA12 /* ReviewCell.m */; };
-		F821BFDD2632A65200F34009 /* PaymentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F4A3E13E50A52006C6651 /* PaymentsViewController.m */; };
-		F821BFDE2632A65200F34009 /* YearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F4A4113E51A99006C6651 /* YearView.m */; };
-		F821BFDF2632A65200F34009 /* BadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEB66513E6D0EE00750788 /* BadgedCell.m */; };
-		F821BFE02632A65200F34009 /* UIImage+Tinting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEB67013E6D3AB00750788 /* UIImage+Tinting.m */; };
-		F821BFE12632A65200F34009 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEB69113E75B7400750788 /* AboutViewController.m */; };
-		F821BFE22632A65200F34009 /* AccountStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F963B4113E98B8600CA62FD /* AccountStatusView.m */; };
-		F821BFE32632A65200F34009 /* PromoCodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1D0B13F6442C00F18143 /* PromoCodesViewController.m */; };
-		F821BFE42632A65200F34009 /* PromoCodesAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1D0E13F6455900F18143 /* PromoCodesAppViewController.m */; };
-		F821BFE52632A65200F34009 /* DownloadStepOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3EA9813F76E3500C80C07 /* DownloadStepOperation.m */; };
-		F821BFE62632A65200F34009 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = DA4984351C129F95009BFC8F /* zip.c */; };
-		F821BFE72632A65200F34009 /* FilterDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC6AB1EFB051F003CAF4D /* FilterDetailTableViewCell.m */; };
-		F821BFE82632A65200F34009 /* ReviewDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC6B51EFB54D6003CAF4D /* ReviewDownloadOperation.m */; };
-		F821BFE92632A65200F34009 /* MultiOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3EA9C13F77DF000C80C07 /* MultiOperation.m */; };
-		F821BFEA2632A65200F34009 /* PromoCodeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B8A6813F77F95006E9151 /* PromoCodeOperation.m */; };
-		F821BFEB2632A65200F34009 /* ASProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF2D89C203B5F8100F3C0CF /* ASProgressHUD.m */; };
-		F821BFEC2632A65200F34009 /* PromoCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B8A6D13F7B941006E9151 /* PromoCode.m */; };
-		F821BFED2632A65200F34009 /* ZIPArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = DA4984381C129F95009BFC8F /* ZIPArchive.mm */; };
-		F821BFEE2632A65200F34009 /* ReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F7F1C16B29D00261B16 /* ReviewsViewController.m */; };
-		F821BFEF2632A65200F34009 /* ReviewFilterOption.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC6A51EFAD348003CAF4D /* ReviewFilterOption.m */; };
-		F821BFF02632A65200F34009 /* ReviewFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC69B1EF869D8003CAF4D /* ReviewFilterViewController.m */; };
-		F821BFF12632A65200F34009 /* PromoCodesLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B8A7213F7E647006E9151 /* PromoCodesLicenseViewController.m */; };
-		F821BFF22632A65200F34009 /* AccountsViewController+ButtonActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F26689614055D2200FD2CC5 /* AccountsViewController+ButtonActions.m */; };
-		F821BFF32632A65200F34009 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9DB1B21C0FEC48007B0178 /* LoginManager.m */; };
-		F821BFF42632A65200F34009 /* KKKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574914CB3C2B005E8F3F /* KKKeychain.m */; };
-		F821BFF52632A65200F34009 /* KKPasscodeLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574B14CB3C2B005E8F3F /* KKPasscodeLock.m */; };
-		F821BFF62632A65200F34009 /* ReviewDownloadCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4AC6B81EFB5AAD003CAF4D /* ReviewDownloadCoordinator.m */; };
-		F821BFF72632A65200F34009 /* KKPasscodeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574D14CB3C2B005E8F3F /* KKPasscodeSettingsViewController.m */; };
-		F821BFF82632A65200F34009 /* KKPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574F14CB3C2B005E8F3F /* KKPasscodeViewController.m */; };
-		F821BFF92632A65200F34009 /* UIAlertController+Window.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7B08C81C135EA300BEAB57 /* UIAlertController+Window.m */; };
-		F821BFFA2632A65200F34009 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = DA4984311C129F95009BFC8F /* mztools.c */; };
-		F821BFFC2632A65200F34009 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F709D2B13BC98860008DBAD /* UIKit.framework */; };
-		F821BFFD2632A65200F34009 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD2C1EA13CE486A002868C7 /* QuartzCore.framework */; };
-		F821BFFE2632A65200F34009 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F709D6D13BCC4270008DBAD /* Security.framework */; };
-		F821BFFF2632A65200F34009 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F709D2F13BC98860008DBAD /* CoreGraphics.framework */; };
-		F821C0002632A65200F34009 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F709D2D13BC98860008DBAD /* Foundation.framework */; };
-		F821C0012632A65200F34009 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F709D3113BC98860008DBAD /* CoreData.framework */; };
-		F821C0022632A65200F34009 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F3796C913F8244000FA6E49 /* MessageUI.framework */; };
-		F821C0032632A65200F34009 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4357FB1C113B670056702C /* LocalAuthentication.framework */; };
-		F821C0042632A65200F34009 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F1499CC13BE172300D89064 /* libz.dylib */; };
-		F821C0062632A65200F34009 /* TopBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F0BF5D313D3154F0063A6B0 /* TopBackground.png */; };
-		F821C0072632A65200F34009 /* ShadowTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F0BF5D813D3317D0063A6B0 /* ShadowTop.png */; };
-		F821C0082632A65200F34009 /* ReviewTemplate_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = 4509175423CFBD1A0028AF83 /* ReviewTemplate_dark.html */; };
-		F821C0092632A65200F34009 /* ShadowBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F0BF5D913D3317D0063A6B0 /* ShadowBottom.png */; };
-		F821C00A2632A65200F34009 /* countries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FDF6E8013D8962500B8CC4E /* countries.plist */; };
-		F821C00B2632A65200F34009 /* passcode_square_filled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DAD39BA61EEC9B3100CB3524 /* passcode_square_filled@3x.png */; };
-		F821C00C2632A65200F34009 /* countries_simple.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FDF6E8213D89B1000B8CC4E /* countries_simple.plist */; };
-		F821C00D2632A65200F34009 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA9DB1B81C101FB2007B0178 /* LaunchScreen.storyboard */; };
-		F821C00E2632A65200F34009 /* Icon216.png in Resources */ = {isa = PBXBuildFile; fileRef = DA2995CC1C120E4C0009D4F1 /* Icon216.png */; };
-		F821C00F2632A65200F34009 /* About_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = 4509175223CF7E990028AF83 /* About_dark.html */; };
-		F821C0102632A65200F34009 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62E09F1A19E693F3002917FE /* Images.xcassets */; };
-		F821C0112632A65200F34009 /* country_names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FAB533313DD0F9A0027274F /* country_names.plist */; };
-		F821C0122632A65200F34009 /* passcode_square_empty@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DAD39BA41EEC9B2D00CB3524 /* passcode_square_empty@3x.png */; };
-		F821C0132632A65200F34009 /* csv_dark.css in Resources */ = {isa = PBXBuildFile; fileRef = 45C2B2202460296200C84374 /* csv_dark.css */; };
-		F821C0142632A65200F34009 /* SAMKeychain.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DA2231A61DB318CC009071A3 /* SAMKeychain.bundle */; };
-		F821C0152632A65200F34009 /* FlagKit.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7B08E01C154CFB00BEAB57 /* FlagKit.xcassets */; };
-		F821C0162632A65200F34009 /* stores.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F89BCE213DFB4F1001C607F /* stores.plist */; };
-		F821C0172632A65200F34009 /* ReviewTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 7F26DF9313E1358B001D0F33 /* ReviewTemplate.html */; };
-		F821C0182632A65200F34009 /* csv.css in Resources */ = {isa = PBXBuildFile; fileRef = 45C2B2212460296200C84374 /* csv.css */; };
-		F821C0192632A65200F34009 /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 7FAEB68E13E75AFF00750788 /* About.html */; };
-		F821C01A2632A65200F34009 /* passcode_square_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D81576114CB44BE005E8F3F /* passcode_square_empty.png */; };
-		F821C01B2632A65200F34009 /* passcode_square_empty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D81576214CB44BE005E8F3F /* passcode_square_empty@2x.png */; };
-		F821C01C2632A65200F34009 /* passcode_square_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D81576314CB44BE005E8F3F /* passcode_square_filled.png */; };
-		F821C01D2632A65200F34009 /* passcode_square_filled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D81576414CB44BE005E8F3F /* passcode_square_filled@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4509175223CF7E990028AF83 /* About_dark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About_dark.html; sourceTree = "<group>"; };
-		4509175423CFBD1A0028AF83 /* ReviewTemplate_dark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ReviewTemplate_dark.html; sourceTree = "<group>"; };
 		4509175823D030130028AF83 /* DarkModeCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DarkModeCheck.h; sourceTree = "<group>"; };
 		4509175923D030130028AF83 /* DarkModeCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DarkModeCheck.m; sourceTree = "<group>"; };
-		45C2B2202460296200C84374 /* csv_dark.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = csv_dark.css; sourceTree = "<group>"; };
 		45C2B2212460296200C84374 /* csv.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = csv.css; sourceTree = "<group>"; };
+		621D32412531C98C00D0EE97 /* UIViewController+Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alert.h"; sourceTree = "<group>"; };
+		621D32422531C98C00D0EE97 /* UIViewController+Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alert.m"; sourceTree = "<group>"; };
 		62E09F1A19E693F3002917FE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AppSales/Images.xcassets; sourceTree = "<group>"; };
 		6D81574814CB3C2B005E8F3F /* KKKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKKeychain.h; sourceTree = "<group>"; };
 		6D81574914CB3C2B005E8F3F /* KKKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKKeychain.m; sourceTree = "<group>"; };
@@ -274,7 +153,6 @@
 		7F0B8A6D13F7B941006E9151 /* PromoCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromoCode.m; sourceTree = "<group>"; };
 		7F0B8A7113F7E647006E9151 /* PromoCodesLicenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromoCodesLicenseViewController.h; sourceTree = "<group>"; };
 		7F0B8A7213F7E647006E9151 /* PromoCodesLicenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PromoCodesLicenseViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		7F0BF5D313D3154F0063A6B0 /* TopBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TopBackground.png; sourceTree = "<group>"; };
 		7F0BF5D813D3317D0063A6B0 /* ShadowTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShadowTop.png; sourceTree = "<group>"; };
 		7F0BF5D913D3317D0063A6B0 /* ShadowBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShadowBottom.png; sourceTree = "<group>"; };
 		7F137EB113DDDABF004655D8 /* CountryDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryDictionary.h; sourceTree = "<group>"; };
@@ -386,6 +264,8 @@
 		7FDF727C13DAAF2900B8CC4E /* ReportCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCollection.m; sourceTree = "<group>"; };
 		7FED633913DB69EA00DF33B1 /* GlobalSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalSettings.h; sourceTree = "<group>"; };
 		AE778A141E2EB6F200DAA6B7 /* AppSales 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppSales 5.xcdatamodel"; sourceTree = "<group>"; };
+		AEF563682531C9670012548E /* PaymentDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentDetailsViewController.h; sourceTree = "<group>"; };
+		AEF563692531C9670012548E /* PaymentDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentDetailsViewController.m; sourceTree = "<group>"; };
 		DA1BC9E62456123100A36B92 /* AppSales 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppSales 7.xcdatamodel"; sourceTree = "<group>"; };
 		DA2231A01DB318C7009071A3 /* SAMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SAMKeychain.h; path = Vendor/SAMKeychain/Sources/SAMKeychain.h; sourceTree = SOURCE_ROOT; };
 		DA2231A11DB318C7009071A3 /* SAMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SAMKeychain.m; path = Vendor/SAMKeychain/Sources/SAMKeychain.m; sourceTree = SOURCE_ROOT; };
@@ -459,10 +339,6 @@
 		DAFC5F921C16BFAD00261B16 /* Review.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Review.m; sourceTree = "<group>"; };
 		DAFC5F941C16C07100261B16 /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
 		DAFC5F951C16C07100261B16 /* Version.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
-		F821C0212632A65200F34009 /* AppSales macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AppSales macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F821C0222632A65300F34009 /* AppSales copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AppSales copy-Info.plist"; path = "/Users/stefan/Projekte/Privat/AppSales_2017/AppSales copy-Info.plist"; sourceTree = "<absolute>"; };
-		F821C0302632A86700F34009 /* AppSales macOSRelease macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AppSales macOSRelease macOS.entitlements"; sourceTree = "<group>"; };
-		F8F5FC8D257A42DC00088724 /* AppSalesMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = AppSalesMobile.entitlements; path = AppSales/AppSalesMobile.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -479,22 +355,6 @@
 				7F3796CC13F8245800FA6E49 /* MessageUI.framework in Frameworks */,
 				DA4357FC1C113B670056702C /* LocalAuthentication.framework in Frameworks */,
 				7F3796CD13F8246200FA6E49 /* libz.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F821BFFB2632A65200F34009 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F821BFFC2632A65200F34009 /* UIKit.framework in Frameworks */,
-				F821BFFD2632A65200F34009 /* QuartzCore.framework in Frameworks */,
-				F821BFFE2632A65200F34009 /* Security.framework in Frameworks */,
-				F821BFFF2632A65200F34009 /* CoreGraphics.framework in Frameworks */,
-				F821C0002632A65200F34009 /* Foundation.framework in Frameworks */,
-				F821C0012632A65200F34009 /* CoreData.framework in Frameworks */,
-				F821C0022632A65200F34009 /* MessageUI.framework in Frameworks */,
-				F821C0032632A65200F34009 /* LocalAuthentication.framework in Frameworks */,
-				F821C0042632A65200F34009 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,8 +442,6 @@
 		7F709D1C13BC98860008DBAD = {
 			isa = PBXGroup;
 			children = (
-				F821C0302632A86700F34009 /* AppSales macOSRelease macOS.entitlements */,
-				F8F5FC8D257A42DC00088724 /* AppSalesMobile.entitlements */,
 				62E09F1A19E693F3002917FE /* Images.xcassets */,
 				DA7B08E01C154CFB00BEAB57 /* FlagKit.xcassets */,
 				DA9DB1B81C101FB2007B0178 /* LaunchScreen.storyboard */,
@@ -592,7 +450,6 @@
 				7F709D3413BC98860008DBAD /* Supporting Files */,
 				7F709D2A13BC98860008DBAD /* Frameworks */,
 				7F709D2813BC98860008DBAD /* Products */,
-				F821C0222632A65300F34009 /* AppSales copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -600,7 +457,6 @@
 			isa = PBXGroup;
 			children = (
 				7F709D2713BC98860008DBAD /* AppSalesMobile.app */,
-				F821C0212632A65200F34009 /* AppSales macOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -631,12 +487,9 @@
 				7FAB533313DD0F9A0027274F /* country_names.plist */,
 				7FDF6E8013D8962500B8CC4E /* countries.plist */,
 				7FDF6E8213D89B1000B8CC4E /* countries_simple.plist */,
-				7F26DF9313E1358B001D0F33 /* ReviewTemplate.html */,
-				4509175423CFBD1A0028AF83 /* ReviewTemplate_dark.html */,
-				7FAEB68E13E75AFF00750788 /* About.html */,
-				4509175223CF7E990028AF83 /* About_dark.html */,
-				45C2B2202460296200C84374 /* csv_dark.css */,
 				45C2B2212460296200C84374 /* csv.css */,
+				7F26DF9313E1358B001D0F33 /* ReviewTemplate.html */,
+				7FAEB68E13E75AFF00750788 /* About.html */,
 			);
 			name = "Supporting Files";
 			path = Support;
@@ -654,7 +507,6 @@
 				DAD39BA61EEC9B3100CB3524 /* passcode_square_filled@3x.png */,
 				7F0BF5D813D3317D0063A6B0 /* ShadowTop.png */,
 				7F0BF5D913D3317D0063A6B0 /* ShadowBottom.png */,
-				7F0BF5D313D3154F0063A6B0 /* TopBackground.png */,
 			);
 			name = Images;
 			path = ../Images;
@@ -727,6 +579,8 @@
 				7F7F4A3E13E50A52006C6651 /* PaymentsViewController.m */,
 				7F7F4A4013E51A99006C6651 /* YearView.h */,
 				7F7F4A4113E51A99006C6651 /* YearView.m */,
+				AEF563682531C9670012548E /* PaymentDetailsViewController.h */,
+				AEF563692531C9670012548E /* PaymentDetailsViewController.m */,
 			);
 			name = Payments;
 			sourceTree = "<group>";
@@ -774,16 +628,18 @@
 			children = (
 				DAF2D89B203B5F8100F3C0CF /* ASProgressHUD.h */,
 				DAF2D89C203B5F8100F3C0CF /* ASProgressHUD.m */,
+				4509175823D030130028AF83 /* DarkModeCheck.h */,
+				4509175923D030130028AF83 /* DarkModeCheck.m */,
 				7F1499C813BE15F500D89064 /* NSData+Compression.h */,
 				7F1499C913BE15F500D89064 /* NSData+Compression.m */,
 				7F454F9E13D5C24F00AE47D1 /* UIColor+Extensions.h */,
 				7F454F9F13D5C24F00AE47D1 /* UIColor+Extensions.m */,
 				7FAEB66F13E6D3AB00750788 /* UIImage+Tinting.h */,
 				7FAEB67013E6D3AB00750788 /* UIImage+Tinting.m */,
-				4509175823D030130028AF83 /* DarkModeCheck.h */,
-				4509175923D030130028AF83 /* DarkModeCheck.m */,
 				DA4984451C12C85F009BFC8F /* UIViewController+Orientation.h */,
 				DA4984461C12C85F009BFC8F /* UIViewController+Orientation.m */,
+				621D32412531C98C00D0EE97 /* UIViewController+Alert.h */,
+				621D32422531C98C00D0EE97 /* UIViewController+Alert.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -999,37 +855,17 @@
 			productReference = 7F709D2713BC98860008DBAD /* AppSalesMobile.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F821BFA42632A65200F34009 /* AppSales macOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F821C01E2632A65200F34009 /* Build configuration list for PBXNativeTarget "AppSales macOS" */;
-			buildPhases = (
-				F821BFA52632A65200F34009 /* Sources */,
-				F821BFFB2632A65200F34009 /* Frameworks */,
-				F821C0052632A65200F34009 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "AppSales macOS";
-			productName = AppSales;
-			productReference = F821C0212632A65200F34009 /* AppSales macOS.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		7F709D1E13BC98860008DBAD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "omz:software";
 				TargetAttributes = {
 					7F709D2613BC98860008DBAD = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = ZDQPQQ9Z48;
-					};
-					F821BFA42632A65200F34009 = {
 						DevelopmentTeam = ZDQPQQ9Z48;
 					};
 				};
@@ -1039,7 +875,6 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -1049,7 +884,6 @@
 			projectRoot = "";
 			targets = (
 				7F709D2613BC98860008DBAD /* AppSales */,
-				F821BFA42632A65200F34009 /* AppSales macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -1059,20 +893,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F0BF5D413D3154F0063A6B0 /* TopBackground.png in Resources */,
 				7F0BF5DA13D3317D0063A6B0 /* ShadowTop.png in Resources */,
-				4509175523CFBD1A0028AF83 /* ReviewTemplate_dark.html in Resources */,
 				7F0BF5DB13D3317D0063A6B0 /* ShadowBottom.png in Resources */,
 				7FDF6E8113D8962500B8CC4E /* countries.plist in Resources */,
 				DAD39BA71EEC9B3100CB3524 /* passcode_square_filled@3x.png in Resources */,
 				7FDF6E8313D89B1000B8CC4E /* countries_simple.plist in Resources */,
 				DA9DB1B91C101FB2007B0178 /* LaunchScreen.storyboard in Resources */,
 				DA2995CD1C120E4C0009D4F1 /* Icon216.png in Resources */,
-				4509175323CF7E990028AF83 /* About_dark.html in Resources */,
 				62E09F1B19E693F3002917FE /* Images.xcassets in Resources */,
 				7FAB533413DD0F9A0027274F /* country_names.plist in Resources */,
 				DAD39BA51EEC9B2D00CB3524 /* passcode_square_empty@3x.png in Resources */,
-				45C2B2222460296200C84374 /* csv_dark.css in Resources */,
 				DA2231A71DB318CC009071A3 /* SAMKeychain.bundle in Resources */,
 				DA7B08E11C154CFB00BEAB57 /* FlagKit.xcassets in Resources */,
 				7F89BCE313DFB4F1001C607F /* stores.plist in Resources */,
@@ -1083,37 +913,6 @@
 				6D81576614CB44BE005E8F3F /* passcode_square_empty@2x.png in Resources */,
 				6D81576714CB44BE005E8F3F /* passcode_square_filled.png in Resources */,
 				6D81576814CB44BE005E8F3F /* passcode_square_filled@2x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F821C0052632A65200F34009 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F821C0062632A65200F34009 /* TopBackground.png in Resources */,
-				F821C0072632A65200F34009 /* ShadowTop.png in Resources */,
-				F821C0082632A65200F34009 /* ReviewTemplate_dark.html in Resources */,
-				F821C0092632A65200F34009 /* ShadowBottom.png in Resources */,
-				F821C00A2632A65200F34009 /* countries.plist in Resources */,
-				F821C00B2632A65200F34009 /* passcode_square_filled@3x.png in Resources */,
-				F821C00C2632A65200F34009 /* countries_simple.plist in Resources */,
-				F821C00D2632A65200F34009 /* LaunchScreen.storyboard in Resources */,
-				F821C00E2632A65200F34009 /* Icon216.png in Resources */,
-				F821C00F2632A65200F34009 /* About_dark.html in Resources */,
-				F821C0102632A65200F34009 /* Images.xcassets in Resources */,
-				F821C0112632A65200F34009 /* country_names.plist in Resources */,
-				F821C0122632A65200F34009 /* passcode_square_empty@3x.png in Resources */,
-				F821C0132632A65200F34009 /* csv_dark.css in Resources */,
-				F821C0142632A65200F34009 /* SAMKeychain.bundle in Resources */,
-				F821C0152632A65200F34009 /* FlagKit.xcassets in Resources */,
-				F821C0162632A65200F34009 /* stores.plist in Resources */,
-				F821C0172632A65200F34009 /* ReviewTemplate.html in Resources */,
-				F821C0182632A65200F34009 /* csv.css in Resources */,
-				F821C0192632A65200F34009 /* About.html in Resources */,
-				F821C01A2632A65200F34009 /* passcode_square_empty.png in Resources */,
-				F821C01B2632A65200F34009 /* passcode_square_empty@2x.png in Resources */,
-				F821C01C2632A65200F34009 /* passcode_square_filled.png in Resources */,
-				F821C01D2632A65200F34009 /* passcode_square_filled@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1133,6 +932,7 @@
 				7F709D6713BCB6500008DBAD /* FieldEditorViewController.m in Sources */,
 				DAD53A581EFCF6ED0038C925 /* ReviewListHeaderView.m in Sources */,
 				7F709D8C13BD03D40008DBAD /* SalesViewController.m in Sources */,
+				621D32432531C98C00D0EE97 /* UIViewController+Alert.m in Sources */,
 				DA4984411C12A884009BFC8F /* MBProgressHUD.m in Sources */,
 				7F709D8F13BD064E0008DBAD /* ASAccount.m in Sources */,
 				7F1499CA13BE15F500D89064 /* NSData+Compression.m in Sources */,
@@ -1164,6 +964,7 @@
 				DA2231A51DB318C7009071A3 /* SAMKeychainQuery.m in Sources */,
 				DA4AC6A91EFAF7A6003CAF4D /* ReviewFilterDetailViewController.m in Sources */,
 				7FD4ECDC13DAFF120054FE6D /* AppleFiscalCalendar.m in Sources */,
+				AEF5636A2531C9670012548E /* PaymentDetailsViewController.m in Sources */,
 				DA4AC6991EF7A1E2003CAF4D /* StarRatingView.m in Sources */,
 				7FAB532C13DCFA7E0027274F /* AppIconView.m in Sources */,
 				7F4065CA13DD379B006148AA /* ReportDetailEntryCell.m in Sources */,
@@ -1212,98 +1013,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F821BFA52632A65200F34009 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F821BFA62632A65200F34009 /* main.m in Sources */,
-				F821BFA72632A65200F34009 /* AppSalesAppDelegate.m in Sources */,
-				F821BFA82632A65200F34009 /* Version.m in Sources */,
-				F821BFA92632A65200F34009 /* ReporterParser.m in Sources */,
-				F821BFAA2632A65200F34009 /* AppSales.xcdatamodeld in Sources */,
-				F821BFAB2632A65200F34009 /* AccountsViewController.m in Sources */,
-				F821BFAC2632A65200F34009 /* FieldEditorViewController.m in Sources */,
-				F821BFAD2632A65200F34009 /* ReviewListHeaderView.m in Sources */,
-				F821BFAE2632A65200F34009 /* SalesViewController.m in Sources */,
-				F821BFAF2632A65200F34009 /* MBProgressHUD.m in Sources */,
-				F821BFB02632A65200F34009 /* ASAccount.m in Sources */,
-				F821BFB12632A65200F34009 /* NSData+Compression.m in Sources */,
-				F821BFB22632A65200F34009 /* ReportDownloadOperation.m in Sources */,
-				F821BFB32632A65200F34009 /* SecurityCodeInputController.m in Sources */,
-				F821BFB42632A65200F34009 /* unzip.c in Sources */,
-				F821BFB52632A65200F34009 /* ReportDownloadCoordinator.m in Sources */,
-				F821BFB62632A65200F34009 /* ReviewFilter.m in Sources */,
-				F821BFB72632A65200F34009 /* Report.m in Sources */,
-				F821BFB82632A65200F34009 /* DarkModeCheck.m in Sources */,
-				F821BFB92632A65200F34009 /* CurrencyManager.m in Sources */,
-				F821BFBA2632A65200F34009 /* ReportImportOperation.m in Sources */,
-				F821BFBB2632A65200F34009 /* GraphView.m in Sources */,
-				F821BFBC2632A65200F34009 /* WeeklyReport.m in Sources */,
-				F821BFBD2632A65200F34009 /* DailyReport.m in Sources */,
-				F821BFBE2632A65200F34009 /* DashboardAppCell.m in Sources */,
-				F821BFBF2632A65200F34009 /* ColorButton.m in Sources */,
-				F821BFC02632A65200F34009 /* Product.m in Sources */,
-				F821BFC12632A65200F34009 /* CrayonColorPickerViewController.m in Sources */,
-				F821BFC22632A65200F34009 /* UIColor+Extensions.m in Sources */,
-				F821BFC32632A65200F34009 /* SAMKeychain.m in Sources */,
-				F821BFC42632A65200F34009 /* UIViewController+Orientation.m in Sources */,
-				F821BFC52632A65200F34009 /* IconManager.m in Sources */,
-				F821BFC62632A65200F34009 /* ReportDetailViewController.m in Sources */,
-				F821BFC72632A65200F34009 /* MapView.m in Sources */,
-				F821BFC82632A65200F34009 /* ReportCSVViewController.m in Sources */,
-				F821BFC92632A65200F34009 /* ReviewFilterComparator.m in Sources */,
-				F821BFCA2632A65200F34009 /* ReportCollection.m in Sources */,
-				F821BFCB2632A65200F34009 /* SAMKeychainQuery.m in Sources */,
-				F821BFCC2632A65200F34009 /* ReviewFilterDetailViewController.m in Sources */,
-				F821BFCD2632A65200F34009 /* AppleFiscalCalendar.m in Sources */,
-				F821BFCE2632A65200F34009 /* StarRatingView.m in Sources */,
-				F821BFCF2632A65200F34009 /* AppIconView.m in Sources */,
-				F821BFD02632A65200F34009 /* ReportDetailEntryCell.m in Sources */,
-				F821BFD12632A65200F34009 /* CountryDictionary.m in Sources */,
-				F821BFD22632A65200F34009 /* Transaction.m in Sources */,
-				F821BFD32632A65200F34009 /* ReportDetailEntry.m in Sources */,
-				F821BFD42632A65200F34009 /* StatusToolbar.m in Sources */,
-				F821BFD52632A65200F34009 /* ReviewListViewController.m in Sources */,
-				F821BFD62632A65200F34009 /* ReviewDetailViewController.m in Sources */,
-				F821BFD72632A65200F34009 /* DeveloperResponse.m in Sources */,
-				F821BFD82632A65200F34009 /* FilterTableViewCell.m in Sources */,
-				F821BFD92632A65200F34009 /* DashboardViewController.m in Sources */,
-				F821BFDA2632A65200F34009 /* ioapi.c in Sources */,
-				F821BFDB2632A65200F34009 /* Review.m in Sources */,
-				F821BFDC2632A65200F34009 /* ReviewCell.m in Sources */,
-				F821BFDD2632A65200F34009 /* PaymentsViewController.m in Sources */,
-				F821BFDE2632A65200F34009 /* YearView.m in Sources */,
-				F821BFDF2632A65200F34009 /* BadgedCell.m in Sources */,
-				F821BFE02632A65200F34009 /* UIImage+Tinting.m in Sources */,
-				F821BFE12632A65200F34009 /* AboutViewController.m in Sources */,
-				F821BFE22632A65200F34009 /* AccountStatusView.m in Sources */,
-				F821BFE32632A65200F34009 /* PromoCodesViewController.m in Sources */,
-				F821BFE42632A65200F34009 /* PromoCodesAppViewController.m in Sources */,
-				F821BFE52632A65200F34009 /* DownloadStepOperation.m in Sources */,
-				F821BFE62632A65200F34009 /* zip.c in Sources */,
-				F821BFE72632A65200F34009 /* FilterDetailTableViewCell.m in Sources */,
-				F821BFE82632A65200F34009 /* ReviewDownloadOperation.m in Sources */,
-				F821BFE92632A65200F34009 /* MultiOperation.m in Sources */,
-				F821BFEA2632A65200F34009 /* PromoCodeOperation.m in Sources */,
-				F821BFEB2632A65200F34009 /* ASProgressHUD.m in Sources */,
-				F821BFEC2632A65200F34009 /* PromoCode.m in Sources */,
-				F821BFED2632A65200F34009 /* ZIPArchive.mm in Sources */,
-				F821BFEE2632A65200F34009 /* ReviewsViewController.m in Sources */,
-				F821BFEF2632A65200F34009 /* ReviewFilterOption.m in Sources */,
-				F821BFF02632A65200F34009 /* ReviewFilterViewController.m in Sources */,
-				F821BFF12632A65200F34009 /* PromoCodesLicenseViewController.m in Sources */,
-				F821BFF22632A65200F34009 /* AccountsViewController+ButtonActions.m in Sources */,
-				F821BFF32632A65200F34009 /* LoginManager.m in Sources */,
-				F821BFF42632A65200F34009 /* KKKeychain.m in Sources */,
-				F821BFF52632A65200F34009 /* KKPasscodeLock.m in Sources */,
-				F821BFF62632A65200F34009 /* ReviewDownloadCoordinator.m in Sources */,
-				F821BFF72632A65200F34009 /* KKPasscodeSettingsViewController.m in Sources */,
-				F821BFF82632A65200F34009 /* KKPasscodeViewController.m in Sources */,
-				F821BFF92632A65200F34009 /* UIAlertController+Window.m in Sources */,
-				F821BFFA2632A65200F34009 /* mztools.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -1316,12 +1025,15 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1348,11 +1060,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-licucore";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -1365,12 +1076,15 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1389,12 +1103,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-licucore";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
@@ -1402,25 +1115,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = AppSales/AppSalesMobile.entitlements;
-				CURRENT_PROJECT_VERSION = 688;
+				CURRENT_PROJECT_VERSION = 692;
 				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Support/AppSales-Info.plist";
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MARKETING_VERSION = 3.6;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.meyer-solutions.AppSalesMobile";
 				PRODUCT_NAME = AppSalesMobile;
 				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-				VALID_ARCHS = "armv7 arm64 armv7s";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1429,10 +1138,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = AppSales/AppSalesMobile.entitlements;
-				CURRENT_PROJECT_VERSION = 688;
+				CURRENT_PROJECT_VERSION = 692;
 				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
@@ -1443,160 +1152,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.meyer-solutions.AppSalesMobile";
 				PRODUCT_NAME = AppSalesMobile;
 				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-				VALID_ARCHS = "armv7 arm64 armv7s";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
-		};
-		F821C01F2632A65200F34009 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = AppSales/AppSalesMobile.entitlements;
-				CURRENT_PROJECT_VERSION = 685;
-				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "AppSales copy-Info.plist";
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
-				MARKETING_VERSION = 3.6;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.meyer-solutions.AppSalesMobile";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-				VALID_ARCHS = "armv7 arm64 armv7s";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		F821C0202632A65200F34009 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = AppSales/AppSalesMobile.entitlements;
-				CURRENT_PROJECT_VERSION = 685;
-				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "AppSales copy-Info.plist";
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
-				MARKETING_VERSION = 3.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.meyer-solutions.AppSalesMobile";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-				VALID_ARCHS = "armv7 arm64 armv7s";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		F821C02B2632A84B00F34009 /* Release macOS */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				OTHER_LDFLAGS = "-licucore";
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = armv7;
-			};
-			name = "Release macOS";
-		};
-		F821C02C2632A84B00F34009 /* Release macOS */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = AppSales/AppSalesMobile.entitlements;
-				CURRENT_PROJECT_VERSION = 688;
-				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Support/AppSales-Info.plist";
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
-				MARKETING_VERSION = 3.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.meyer-solutions.AppSalesMobile";
-				PRODUCT_NAME = AppSalesMobile;
-				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-				VALID_ARCHS = "armv7 arm64 armv7s";
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Release macOS";
-		};
-		F821C02D2632A84B00F34009 /* Release macOS */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "AppSales macOSRelease macOS.entitlements";
-				CURRENT_PROJECT_VERSION = 685;
-				DEVELOPMENT_TEAM = ZDQPQQ9Z48;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "OtherSources/AppSales-Prefix.pch";
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "AppSales copy-Info.plist";
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
-				MARKETING_VERSION = 3.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.meyer-solutions.AppSalesMobile";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-				VALID_ARCHS = "armv7 arm64 armv7s";
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Release macOS";
 		};
 /* End XCBuildConfiguration section */
 
@@ -1606,7 +1165,6 @@
 			buildConfigurations = (
 				7F709D4B13BC98860008DBAD /* Debug */,
 				7F709D4C13BC98860008DBAD /* Release */,
-				F821C02B2632A84B00F34009 /* Release macOS */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1616,17 +1174,6 @@
 			buildConfigurations = (
 				7F709D4E13BC98860008DBAD /* Debug */,
 				7F709D4F13BC98860008DBAD /* Release */,
-				F821C02C2632A84B00F34009 /* Release macOS */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F821C01E2632A65200F34009 /* Build configuration list for PBXNativeTarget "AppSales macOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F821C01F2632A65200F34009 /* Debug */,
-				F821C0202632A65200F34009 /* Release */,
-				F821C02D2632A84B00F34009 /* Release macOS */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

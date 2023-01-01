@@ -18,6 +18,9 @@
 	ASAccount *account;
 	UITableView *productsTableView;
 	UIView *topView;
+	CAGradientLayer *gradientLayer;
+	UIView *topHighlight;
+	UIView *bottomHighlight;
 	UIImageView *shadowView;
 	
 	NSArray *products;
@@ -30,7 +33,7 @@
 	UILabel *statusLabel;
 	UIProgressView *progressBar;
 	
-	UIActionSheet *activeSheet;
+    UIAlertController *activeAlertSheet;
 }
 
 @property (nonatomic, strong) ASAccount *account;
@@ -45,7 +48,7 @@
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) UILabel *statusLabel;
 @property (nonatomic, strong) UIProgressView *progressBar;
-@property (nonatomic, strong) UIActionSheet *activeSheet;
+@property (nonatomic, strong) UIAlertController *activeAlertSheet;
 
 - (instancetype)initWithAccount:(ASAccount *)anAccount;
 - (void)willShowPasscodeLock:(NSNotification *)notification;

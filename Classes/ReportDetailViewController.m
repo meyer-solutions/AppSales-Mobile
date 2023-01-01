@@ -43,11 +43,18 @@
 	[super loadView];
 	self.edgesForExtendedLayout = UIRectEdgeNone;
 	
-    if (@available(iOS 13.0, *)) {
-        self.view.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        self.view.backgroundColor = [UIColor colorWithRed:111.0f/255.0f green:113.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
-    }
+	if (@available(iOS 13.0, *)) {
+		self.view.backgroundColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+			switch (traitCollection.userInterfaceStyle) {
+				case UIUserInterfaceStyleDark:
+					return [UIColor colorWithRed:14.0f/255.0f green:14.0f/255.0f blue:15.0f/255.0f alpha:1.0f];
+				default:
+					return [UIColor colorWithRed:111.0f/255.0f green:113.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
+			}
+		}];
+	} else {
+		self.view.backgroundColor = [UIColor colorWithRed:111.0f/255.0f green:113.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
+	}
 	
 	numberFormatter = [[NSNumberFormatter alloc] init];
 	numberFormatter.locale = [NSLocale currentLocale];
@@ -153,13 +160,13 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
 	UIInterfaceOrientation toInterfaceOrientation = [self relativeOrientationFromTransform:coordinator.targetTransform];
 	[coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-		if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && !mapHidden) {
+        if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && !self->mapHidden) {
 			[self toggleMap:nil];
 		}
 		self.tableView.contentInset = UIEdgeInsetsMake(-20.0f, 0.0f, -20.0f, 0.0f);
 	} completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 		if (!UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-			self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:(mapHidden ? @"ShowMap" : @"HideMap")] style:UIBarButtonItemStylePlain target:self action:@selector(toggleMap:)];
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:(self->mapHidden ? @"ShowMap" : @"HideMap")] style:UIBarButtonItemStylePlain target:self action:@selector(toggleMap:)];
 		} else {
 			self.navigationItem.rightBarButtonItem = nil;
 		}
@@ -180,10 +187,6 @@
 	[super viewDidLoad];
 }
 
-- (void)viewDidUnload {
-	[super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	self.navigationController.toolbarHidden = NO;
@@ -194,8 +197,8 @@
 	self.navigationController.toolbarHidden = YES;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return (interfaceOrientation == UIInterfaceOrientationPortrait || UIInterfaceOrientationIsLandscape(interfaceOrientation));
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return  UIInterfaceOrientationMaskAll;
 }
 
 - (void)toggleMap:(id)sender {

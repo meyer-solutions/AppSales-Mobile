@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DarkModeCheck : NSObject
 
-+(BOOL)deviceIsInDarkMode;
++ (BOOL)deviceIsInDarkMode;
 + (UIImage *)checkForDarkModeImage:(NSString *)name;
 + (NSString *)checkForDarkModeHtml:(NSString *)htmlName;
 
