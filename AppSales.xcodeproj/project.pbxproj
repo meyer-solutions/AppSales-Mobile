@@ -123,6 +123,8 @@
 		DAFC5F801C16B29D00261B16 /* ReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F7F1C16B29D00261B16 /* ReviewsViewController.m */; };
 		DAFC5F931C16BFAD00261B16 /* Review.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F921C16BFAD00261B16 /* Review.m */; };
 		DAFC5F961C16C07100261B16 /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F951C16C07100261B16 /* Version.m */; };
+		F876532829A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F876532629A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.m */; };
+		F876532929A7D6EA004AE9A8 /* UIToolbar+FixAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F876532729A7D6EA004AE9A8 /* UIToolbar+FixAppearance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -339,6 +341,10 @@
 		DAFC5F921C16BFAD00261B16 /* Review.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Review.m; sourceTree = "<group>"; };
 		DAFC5F941C16C07100261B16 /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
 		DAFC5F951C16C07100261B16 /* Version.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
+		F876532429A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+FixAppearance.h"; sourceTree = "<group>"; };
+		F876532529A7D6EA004AE9A8 /* UIToolbar+FixAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+FixAppearance.h"; sourceTree = "<group>"; };
+		F876532629A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+FixAppearance.m"; sourceTree = "<group>"; };
+		F876532729A7D6EA004AE9A8 /* UIToolbar+FixAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+FixAppearance.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,6 +385,10 @@
 		7F1B159E13C9D1CA00243AA3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F876532429A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.h */,
+				F876532629A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.m */,
+				F876532529A7D6EA004AE9A8 /* UIToolbar+FixAppearance.h */,
+				F876532729A7D6EA004AE9A8 /* UIToolbar+FixAppearance.m */,
 				7F709D3C13BC98860008DBAD /* AppSalesAppDelegate.h */,
 				7F709D3D13BC98860008DBAD /* AppSalesAppDelegate.m */,
 				7FDF601C13DD2107005F1E2D /* Helpers */,
@@ -938,6 +948,7 @@
 				7F1499CA13BE15F500D89064 /* NSData+Compression.m in Sources */,
 				7F1499D013BE311600D89064 /* ReportDownloadOperation.m in Sources */,
 				DA9DB1B61C0FEC48007B0178 /* SecurityCodeInputController.m in Sources */,
+				F876532829A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.m in Sources */,
 				DA49843B1C129F95009BFC8F /* unzip.c in Sources */,
 				7F1499E113BE544F00D89064 /* ReportDownloadCoordinator.m in Sources */,
 				DA4AC6A31EF9CBB4003CAF4D /* ReviewFilter.m in Sources */,
@@ -995,6 +1006,7 @@
 				7FA3EA9D13F77DF000C80C07 /* MultiOperation.m in Sources */,
 				7F0B8A6913F77F95006E9151 /* PromoCodeOperation.m in Sources */,
 				DAF2D89D203B5F8100F3C0CF /* ASProgressHUD.m in Sources */,
+				F876532929A7D6EA004AE9A8 /* UIToolbar+FixAppearance.m in Sources */,
 				7F0B8A6E13F7B941006E9151 /* PromoCode.m in Sources */,
 				DA49843D1C129F95009BFC8F /* ZIPArchive.mm in Sources */,
 				DAFC5F801C16B29D00261B16 /* ReviewsViewController.m in Sources */,

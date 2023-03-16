@@ -7,7 +7,6 @@
 //
 
 #import "AppSalesAppDelegate.h"
-
 #import "AccountsViewController.h"
 #import "CurrencyManager.h"
 #import "ReportDownloadOperation.h"
@@ -21,13 +20,19 @@
 #import "PromoCodesViewController.h"
 #import "PromoCodesLicenseViewController.h"
 #import "UIViewController+Alert.h"
+#import "UINavigationBar+FixAppearance.h"
+#import "UIToolbar+FixAppearance.h"
 
 @implementation AppSalesAppDelegate
 
 @synthesize window, accountsViewController, accountsPopover;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    if (@available(iOS 13.0, *)) {
+        [UINavigationBar fixNavigationBarAppearance];
+        [UIToolbar fixToolbarAppearance];
+    }
+    
 	[[KKPasscodeLock sharedLock] setDefaultSettings];
 	[[KKPasscodeLock sharedLock] setEraseOption:NO];
 	
@@ -345,16 +350,16 @@
 
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (persistentStoreCoordinator != nil) {
-        return persistentStoreCoordinator;
-    }
+	if (persistentStoreCoordinator != nil) {
+		return persistentStoreCoordinator;
+	}	
     
     NSURL* docURL = [[NSURL fileURLWithPath:[self applicationDocumentsDirectory]] URLByAppendingPathComponent:@"AppSales.sqlite"];
     
     //NSURL* sharedURL = [[self sharedApplicationGroupContainer] URLByAppendingPathComponent:@"AppSales.sqlite"];
-    NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"AppSales.sqlite"];
-    
-    NSError *error = nil;
+	NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"AppSales.sqlite"];
+	
+	NSError *error = nil;
     
     //[[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
     //[[NSFileManager defaultManager] copyItemAtURL:storeURL toURL:docURL error:&error];
@@ -387,18 +392,18 @@
     }*/
     
     
-    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+	persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
                              [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
+	if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
     
     [[NSFileManager defaultManager] removeItemAtURL:docURL error:nil];
     
-    return persistentStoreCoordinator;
+	return persistentStoreCoordinator;
 }
 
 
