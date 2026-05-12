@@ -553,42 +553,20 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 		}
 
 		// Build a set of calendar (year, month) keys we already have a
-		// PaymentReport for, so we don't re-fetch them.
-		//
-		// A PaymentReport that has no PaymentDetailed with bankName set must
-		// have come from this Finance-API path (legacy cookie-path always set
-		// bankName). Delete those so a subsequent re-fetch can replace them —
-		// this lets us iterate on the API logic without manual DB surgery.
+		// PaymentReport for. Existing reports — whether from the legacy
+		// cookie path or from a previous Finance-API run — are left untouched.
+		// Only months with no existing PaymentReport will be fetched.
 		NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 		NSMutableSet<NSString *> *existingKeys = [NSMutableSet set];
-		NSMutableArray *staleNewPathReports = [NSMutableArray array];
 		for (NSManagedObject *report in account.paymentReports) {
 			NSDate *reportDate = [report valueForKey:@"reportDate"];
 			if (reportDate == nil) continue;
-			NSSet *details = [report valueForKey:@"payments"];
-			BOOL fromLegacyPath = NO;
-			for (NSManagedObject *d in details) {
-				NSString *bn = [d valueForKey:@"bankName"];
-				if (bn.length > 0) { fromLegacyPath = YES; break; }
-			}
-			if (!fromLegacyPath) {
-				[staleNewPathReports addObject:report];
-				continue;  // do NOT add to existingKeys — let it be re-imported
-			}
 			NSDateComponents *c = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth) fromDate:reportDate];
 			[existingKeys addObject:[NSString stringWithFormat:@"%ld-%ld", (long)c.year, (long)c.month]];
 		}
-		if (staleNewPathReports.count > 0) {
-			NSLog(@"Finance: deleting %lu prior Finance-API PaymentReports for re-import.", (unsigned long)staleNewPathReports.count);
-			for (NSManagedObject *r in staleNewPathReports) [moc deleteObject:r];
-			[psc performBlockAndWait:^{
-				NSError *err = nil;
-				[moc save:&err];
-				if (err) NSLog(@"Finance: save error during stale cleanup: %@", err);
-			}];
-		}
-		NSLog(@"Finance: %lu legacy PaymentReports remain (skipped from re-fetch).", (unsigned long)existingKeys.count);
-
+		NSLog(@"Finance: already have %lu PaymentReports — only missing months will be fetched.", (unsigned long)existingKeys.count);
+        
+        /*
 		// One-shot diagnostic: ask Apple for the canonical Finance.getReport
 		// signature so future format drift is self-debuggable from logs alone.
 		static dispatch_once_t helpOnce;
@@ -596,6 +574,7 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 			NSString *help = [self callReporterMethod:@"Finance.getHelp" service:kITCReporterServiceTypeFinance];
 			NSLog(@"Finance.getHelp →\n%@", help ?: @"(no response)");
 		});
+         */
 
 		// Discover available regions for this vendor.
 		NSArray<NSString *> *regions = [self fetchAvailableFinanceRegionsForVendor:vendorID];
