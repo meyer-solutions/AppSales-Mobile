@@ -61,7 +61,7 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 	if (self) {
 		// Initialization code
 		account = _account;
-        loginInfo = [NSDictionary dictionaryWithObject:account.providerID forKey:kAccountProviderID];
+        loginInfo = [NSDictionary dictionaryWithObject:(account.providerID ?: @"") forKey:kAccountProviderID];
 		authType = SCInputTypeUnknown;
 		dateFormatter = [[NSDateFormatter alloc] init];
 		dateFormatter.dateFormat = @"MMM dd, yyyy";
@@ -305,10 +305,10 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 						[self.delegate loginFailed:self];
 					});
 				}
-			} else if (providerID != account.providerID) {
+			} else if (![providerID isEqualToString:account.providerID]) {
 				// Current provider ID does not match preferred account provider ID.
 				for (NSDictionary *provider in availableProviders) {
-					if (loginInfo[kAccountProviderID] == [(NSNumber *)provider[@"providerId"] description]) {
+					if ([loginInfo[kAccountProviderID] isEqualToString:[(NSNumber *)provider[@"providerId"] description]]) {
 						[self changeToProvider:provider];
 						return;
 					}
@@ -334,10 +334,10 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self chooseProvider];
 				});
-			} else if (providerID != loginInfo[kAccountProviderID]) {
+			} else if (![providerID isEqualToString:loginInfo[kAccountProviderID]]) {
 				// Current provider ID does not match preferred provider ID.
 				for (NSDictionary *provider in availableProviders) {
-					if (loginInfo[kAccountProviderID] == [(NSNumber *)provider[@"providerId"] description]) {
+					if ([loginInfo[kAccountProviderID] isEqualToString:[(NSNumber *)provider[@"providerId"] description]]) {
 						[self changeToProvider:provider];
 						return;
 					}
