@@ -13,6 +13,22 @@
 #import "NSData+Compression.h"
 #import "ReporterParser.h"
 
+// Forward declarations of category-private helpers.
+@interface ReportDownloadOperation ()
+- (void)downloadFinanceReports;
+- (NSArray<NSString *> *)fetchAvailableFinanceRegionsForVendor:(NSString *)vendor;
+- (NSString *)fetchFinanceTSVForVendor:(NSString *)vendor
+								region:(NSString *)region
+							fiscalYear:(NSInteger)fiscalYear
+						  fiscalPeriod:(NSInteger)fiscalPeriod
+							  outError:(NSString **)outError;
+- (NSDictionary<NSString *, NSNumber *> *)aggregateProceedsByCurrencyFromTSV:(NSString *)tsv;
+- (void)mapCalendarYear:(NSInteger)year month:(NSInteger)month
+		   toFiscalYear:(NSInteger *)outFiscalYear period:(NSInteger *)outPeriod;
+- (NSString *)callReporterMethod:(NSString *)methodCall service:(NSString *)serviceType;
++ (NSSet<NSString *> *)rollupRegionCodes;
+@end
+
 // iTunes Connect Reporter API
 NSString *const kITCReporterVersion            = @"2.2";
 NSString *const kITCReporterMode               = @"Robot.XML";
@@ -286,12 +302,14 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 
 		BOOL downloadPayments = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDownloadPayments];
 		if (downloadPayments && ((numberOfReportsDownloaded >= 0) || (account.payments.count == 0))) {
-			[self downloadProgress:0.9f withStatus:NSLocalizedString(@"Loading payments...", nil)];
-
-			LoginManager *loginManager = [[LoginManager alloc] initWithAccount:_account];
-			loginManager.shouldDeleteCookies = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDeleteCookies];
-			loginManager.delegate = self;
-			[loginManager logIn];
+			// Apple has retired the legacy cookie-based payments login flow on
+			// itunesconnect.apple.com (idmsa /signin returns 503). Pull the
+			// equivalent data via the same Reporter API access token that
+			// already powers the sales download. The data we get is the
+			// per-app royalty breakdown (Finance.getReport), which we aggregate
+			// per currency per month to populate PaymentReport / PaymentDetailed.
+			[self downloadFinanceReports];
+			[self completeDownload];
 		} else {
 			if (numberOfReportsDownloaded > 0) {
 				[self completeDownload];
@@ -499,6 +517,428 @@ static NSString *NSStringPercentEscaped(NSString *string) {
 			}
 		}
 	});
+}
+
+#pragma mark - Finance Reports (Reporter API)
+
+// Replacement for the legacy cookie-based payments fetch. Uses the same
+// Reporter API access token already used by the sales download.
+//
+// Mapping into the existing data model:
+//   - For each calendar month we don't already have a PaymentReport for,
+//     fetch Finance.getReport for every region the vendor publishes to
+//     (discovered via Finance.getVendorsAndRegions).
+//   - Aggregate the "Extended Partner Share" column per "Partner Share
+//     Currency" across all regions of that month.
+//   - Insert one PaymentReport per month, with one PaymentDetailed per
+//     currency. Bank info / paid-vs-expected status is not available from
+//     this API path — those fields are left nil. The UI must tolerate this.
+- (void)downloadFinanceReports {
+	@autoreleasepool {
+		[self downloadProgress:0.9f withStatus:NSLocalizedString(@"Loading finance reports...", nil)];
+
+		if ((accessToken.length == 0) || (providerID.length == 0)) {
+			NSLog(@"Finance: skipping — access token or provider ID is missing on the account.");
+			return;
+		}
+
+		NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+		moc.persistentStoreCoordinator = psc;
+		moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+		ASAccount *account = (ASAccount *)[moc objectWithID:accountObjectID];
+		NSString *vendorID = account.vendorID;
+		if (vendorID.length == 0) {
+			NSLog(@"Finance: skipping — vendor ID is missing on the account.");
+			return;
+		}
+
+		// Build a set of calendar (year, month) keys we already have a
+		// PaymentReport for, so we don't re-fetch them.
+		//
+		// A PaymentReport that has no PaymentDetailed with bankName set must
+		// have come from this Finance-API path (legacy cookie-path always set
+		// bankName). Delete those so a subsequent re-fetch can replace them —
+		// this lets us iterate on the API logic without manual DB surgery.
+		NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+		NSMutableSet<NSString *> *existingKeys = [NSMutableSet set];
+		NSMutableArray *staleNewPathReports = [NSMutableArray array];
+		for (NSManagedObject *report in account.paymentReports) {
+			NSDate *reportDate = [report valueForKey:@"reportDate"];
+			if (reportDate == nil) continue;
+			NSSet *details = [report valueForKey:@"payments"];
+			BOOL fromLegacyPath = NO;
+			for (NSManagedObject *d in details) {
+				NSString *bn = [d valueForKey:@"bankName"];
+				if (bn.length > 0) { fromLegacyPath = YES; break; }
+			}
+			if (!fromLegacyPath) {
+				[staleNewPathReports addObject:report];
+				continue;  // do NOT add to existingKeys — let it be re-imported
+			}
+			NSDateComponents *c = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth) fromDate:reportDate];
+			[existingKeys addObject:[NSString stringWithFormat:@"%ld-%ld", (long)c.year, (long)c.month]];
+		}
+		if (staleNewPathReports.count > 0) {
+			NSLog(@"Finance: deleting %lu prior Finance-API PaymentReports for re-import.", (unsigned long)staleNewPathReports.count);
+			for (NSManagedObject *r in staleNewPathReports) [moc deleteObject:r];
+			[psc performBlockAndWait:^{
+				NSError *err = nil;
+				[moc save:&err];
+				if (err) NSLog(@"Finance: save error during stale cleanup: %@", err);
+			}];
+		}
+		NSLog(@"Finance: %lu legacy PaymentReports remain (skipped from re-fetch).", (unsigned long)existingKeys.count);
+
+		// One-shot diagnostic: ask Apple for the canonical Finance.getReport
+		// signature so future format drift is self-debuggable from logs alone.
+		static dispatch_once_t helpOnce;
+		dispatch_once(&helpOnce, ^{
+			NSString *help = [self callReporterMethod:@"Finance.getHelp" service:kITCReporterServiceTypeFinance];
+			NSLog(@"Finance.getHelp →\n%@", help ?: @"(no response)");
+		});
+
+		// Discover available regions for this vendor.
+		NSArray<NSString *> *regions = [self fetchAvailableFinanceRegionsForVendor:vendorID];
+		if (regions.count == 0) {
+			NSLog(@"Finance: Finance.getVendorsAndRegions returned no regions; falling back to ['WW'].");
+			regions = @[@"WW"];
+		}
+		NSLog(@"Finance: %lu regions available for vendor %@: %@",
+			  (unsigned long)regions.count, vendorID, [regions componentsJoinedByString:@", "]);
+
+		// Walk back through the last 24 calendar months. Skip any we already
+		// have. For each remaining month, try to fetch all regions.
+		NSDate *cursor = [NSDate date];
+		NSDateComponents *minusMonth = [[NSDateComponents alloc] init];
+		minusMonth.month = -1;
+		NSInteger consecutiveEmpty = 0;
+		for (NSInteger monthsBack = 1; monthsBack <= 24; monthsBack++) {
+			if (self.isCancelled) break;
+
+			cursor = [calendar dateByAddingComponents:minusMonth toDate:cursor options:0];
+			NSDateComponents *c = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth) fromDate:cursor];
+			NSString *key = [NSString stringWithFormat:@"%ld-%ld", (long)c.year, (long)c.month];
+			if ([existingKeys containsObject:key]) {
+				NSLog(@"Finance: %ld-%02ld already imported, skipping.", (long)c.year, (long)c.month);
+				continue;
+			}
+
+			NSInteger fiscalYear = 0, fiscalPeriod = 0;
+			[self mapCalendarYear:c.year month:c.month toFiscalYear:&fiscalYear period:&fiscalPeriod];
+
+			NSMutableDictionary<NSString *, NSDecimalNumber *> *totalsByCurrency = [NSMutableDictionary dictionary];
+			BOOL anyRegionHadData = NO;
+			// First imported month of this run gets verbose per-region logging
+			// so the user can spot any remaining rollup/duplicate region.
+			static dispatch_once_t verboseOnce;
+			__block BOOL verboseThisMonth = NO;
+			dispatch_once(&verboseOnce, ^{ verboseThisMonth = YES; });
+
+			for (NSString *region in regions) {
+				if (self.isCancelled) break;
+				NSString *errorMessage = nil;
+				NSString *tsv = [self fetchFinanceTSVForVendor:vendorID
+														region:region
+													fiscalYear:fiscalYear
+												  fiscalPeriod:fiscalPeriod
+													  outError:&errorMessage];
+				if (tsv.length == 0) {
+					if (errorMessage.length > 0) {
+						NSLog(@"Finance: %ld-%02ld %@ → %@", (long)c.year, (long)c.month, region, errorMessage);
+					}
+					continue;
+				}
+				anyRegionHadData = YES;
+				NSDictionary<NSString *, NSNumber *> *regionTotals = [self aggregateProceedsByCurrencyFromTSV:tsv];
+				if (verboseThisMonth) {
+					NSMutableString *summary = [NSMutableString string];
+					for (NSString *cur in regionTotals) {
+						[summary appendFormat:@"%@=%.2f ", cur, regionTotals[cur].floatValue];
+					}
+					NSLog(@"Finance: %ld-%02ld %@ → %@", (long)c.year, (long)c.month, region, summary);
+				}
+				for (NSString *currency in regionTotals) {
+					NSDecimalNumber *running = totalsByCurrency[currency] ?: [NSDecimalNumber zero];
+					NSDecimalNumber *add = [NSDecimalNumber decimalNumberWithDecimal:[regionTotals[currency] decimalValue]];
+					totalsByCurrency[currency] = [running decimalNumberByAdding:add];
+				}
+			}
+
+			if (!anyRegionHadData) {
+				consecutiveEmpty++;
+				// Apple keeps ~24 months of finance data. If we've seen 6 empty
+				// months in a row, assume we've walked off the end and stop.
+				if (consecutiveEmpty >= 6) {
+					NSLog(@"Finance: 6 consecutive empty months, stopping backfill.");
+					break;
+				}
+				continue;
+			}
+			consecutiveEmpty = 0;
+
+			// Insert PaymentReport + one PaymentDetailed per currency.
+			NSDateComponents *firstOfMonth = [[NSDateComponents alloc] init];
+			firstOfMonth.year = c.year;
+			firstOfMonth.month = c.month;
+			firstOfMonth.day = 1;
+			NSDate *reportDate = [calendar dateFromComponents:firstOfMonth];
+
+			NSManagedObject *paymentReport = [NSEntityDescription insertNewObjectForEntityForName:@"PaymentReport" inManagedObjectContext:moc];
+			[paymentReport setValue:reportDate forKey:@"reportDate"];
+			[paymentReport setValue:account forKey:@"account"];
+
+			for (NSString *currency in totalsByCurrency) {
+				NSDecimalNumber *amount = totalsByCurrency[currency];
+				NSManagedObject *paymentDetailed = [NSEntityDescription insertNewObjectForEntityForName:@"PaymentDetailed" inManagedObjectContext:moc];
+				[paymentDetailed setValue:@(amount.floatValue) forKey:@"amount"];
+				[paymentDetailed setValue:currency forKey:@"currency"];
+				[paymentDetailed setValue:@(NO) forKey:@"isExpected"];
+				// Bank name, masked account, paid-or-expected date, and status
+				// are not available via the Reporter API. Left nil intentionally.
+				[paymentDetailed setValue:paymentReport forKey:@"paymentReport"];
+			}
+			account.paymentsBadge = @(account.paymentsBadge.integerValue + 1);
+
+			NSError *saveError = nil;
+			[psc performBlockAndWait:^{
+				NSError *err = nil;
+				[moc save:&err];
+				if (err) NSLog(@"Finance: save error for %ld-%02ld: %@", (long)c.year, (long)c.month, err);
+			}];
+			if (saveError == nil) {
+				NSLog(@"Finance: imported %ld-%02ld with %lu currency totals.",
+					  (long)c.year, (long)c.month, (unsigned long)totalsByCurrency.count);
+			}
+		}
+	}
+}
+
+// Apple fiscal calendar: year starts in October.
+//   Calendar Oct/Nov/Dec of year N  →  fiscal year N+1, periods 1/2/3
+//   Calendar Jan–Sep of year N      →  fiscal year N,   periods 4–12
+- (void)mapCalendarYear:(NSInteger)year month:(NSInteger)month
+		   toFiscalYear:(NSInteger *)outFiscalYear period:(NSInteger *)outPeriod {
+	if (month >= 10) {
+		*outFiscalYear = year + 1;
+		*outPeriod = month - 9;
+	} else {
+		*outFiscalYear = year;
+		*outPeriod = month + 3;
+	}
+}
+
+// Generic Reporter-API caller — used for diagnostic calls like Finance.getHelp.
+// Returns the raw response text (or nil), with no parsing.
+- (NSString *)callReporterMethod:(NSString *)methodCall service:(NSString *)serviceType {
+	NSString *query = [NSString stringWithFormat:@"a=%@, %@", providerID, methodCall];
+	NSDictionary *getReportData = @{@"accesstoken": NSStringPercentEscaped(accessToken),
+									@"version":     kITCReporterVersion,
+									@"mode":        kITCReporterMode,
+									@"queryInput":  NSStringPercentEscaped([NSString stringWithFormat:kITCReporterServiceBody, query]),
+									@"salesurl":    NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeSales]),
+									@"financeurl":  NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeFinance]),
+									};
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:getReportData options:0 error:nil];
+	NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+	NSString *body = [NSString stringWithFormat:@"jsonRequest=%@", jsonString];
+
+	NSURL *url = [NSURL URLWithString:[kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, serviceType]];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+	request.HTTPMethod = @"POST";
+	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+	request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+
+	NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+	if (responseData.length == 0) return nil;
+	return [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+}
+
+// Region codes that are ROLLUPS of other regions and must not be summed
+// alongside them, or every transaction is counted twice.
+//   WW — "Worldwide" rollup of every per-currency settlement region.
+//   ZZ — also a rollup; the 2026-04 log proved it by reproducing the exact
+//        per-currency amounts of CH+EU+GB+RO+US in a single 'ZZ' row.
+// Including either inflates totals by 2×.
++ (NSSet<NSString *> *)rollupRegionCodes {
+	static NSSet *codes = nil;
+	static dispatch_once_t once;
+	dispatch_once(&once, ^{
+		codes = [NSSet setWithObjects:@"WW", @"ZZ", nil];
+	});
+	return codes;
+}
+
+- (NSArray<NSString *> *)fetchAvailableFinanceRegionsForVendor:(NSString *)vendor {
+	NSString *query = [NSString stringWithFormat:@"a=%@, Finance.getVendorsAndRegions", providerID];
+
+	NSDictionary *getReportData = @{@"accesstoken": NSStringPercentEscaped(accessToken),
+									@"version":     kITCReporterVersion,
+									@"mode":        kITCReporterMode,
+									@"queryInput":  NSStringPercentEscaped([NSString stringWithFormat:kITCReporterServiceBody, query]),
+									@"salesurl":    NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeSales]),
+									@"financeurl":  NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeFinance]),
+									};
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:getReportData options:0 error:nil];
+	NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+	NSString *body = [NSString stringWithFormat:@"jsonRequest=%@", jsonString];
+
+	NSURL *url = [NSURL URLWithString:[kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeFinance]];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+	request.HTTPMethod = @"POST";
+	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+	request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+
+	NSHTTPURLResponse *response = nil;
+	NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+	if (responseData.length == 0) {
+		NSLog(@"Finance.getVendorsAndRegions: no response (status=%ld).", (long)response.statusCode);
+		return @[];
+	}
+
+	// Parse the XML response — structure is Vendor → Region → Code/Reports.
+	// ReporterParser is geared for simple lists; for nested XML we do a quick
+	// regex scrape over the <Code>…</Code> tags inside <Region> blocks.
+	NSString *xml = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+	NSMutableArray<NSString *> *regions = [NSMutableArray array];
+	NSError *regexError = nil;
+	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<Code>([^<]+)</Code>"
+																		   options:0
+																			 error:&regexError];
+	NSSet *rollups = [ReportDownloadOperation rollupRegionCodes];
+	[regex enumerateMatchesInString:xml options:0 range:NSMakeRange(0, xml.length)
+						 usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+		NSString *code = [xml substringWithRange:[match rangeAtIndex:1]];
+		if (code.length == 0) return;
+		if ([rollups containsObject:code]) {
+			NSLog(@"Finance: skipping rollup region '%@' to avoid double-counting.", code);
+			return;
+		}
+		if (![regions containsObject:code]) {
+			[regions addObject:code];
+		}
+	}];
+	return regions;
+}
+
+// Returns nil + sets *outError on failure / not-available; returns parsed TSV string on success.
+- (NSString *)fetchFinanceTSVForVendor:(NSString *)vendor
+								region:(NSString *)region
+							fiscalYear:(NSInteger)fiscalYear
+						  fiscalPeriod:(NSInteger)fiscalPeriod
+							  outError:(NSString **)outError {
+	// Apple Reporter 2.2 signature for Finance.getReport is:
+	//   Finance.getReport <vendor>, <region>, <reportType>, <fiscalYear>, <fiscalPeriod>
+	// (fiscal_year and fiscal_period are SEPARATE parameters.)
+	//
+	// Spacing: match the sales-side format exactly — space after `a=…,` and
+	// after the method name, but NO space between subsequent arguments. The
+	// Reporter parser appears to treat leading whitespace as part of the value
+	// for some args, which causes silent rejection.
+	NSString *query = [NSString stringWithFormat:@"a=%@, Finance.getReport, %@,%@,Financial,%ld,%02ld",
+					   providerID, vendor, region, (long)fiscalYear, (long)fiscalPeriod];
+	static dispatch_once_t logQueryOnce;
+	dispatch_once(&logQueryOnce, ^{
+		NSLog(@"Finance.getReport query (first attempt): %@", query);
+	});
+
+	NSDictionary *getReportData = @{@"accesstoken": NSStringPercentEscaped(accessToken),
+									@"version":     kITCReporterVersion,
+									@"mode":        kITCReporterMode,
+									@"queryInput":  NSStringPercentEscaped([NSString stringWithFormat:kITCReporterServiceBody, query]),
+									@"salesurl":    NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeSales]),
+									@"financeurl":  NSStringPercentEscaped([kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeFinance]),
+									};
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:getReportData options:0 error:nil];
+	NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+	NSString *body = [NSString stringWithFormat:@"jsonRequest=%@", jsonString];
+
+	NSURL *url = [NSURL URLWithString:[kITCReporterBaseURL stringByAppendingFormat:kITCReporterServiceAction, kITCReporterServiceTypeFinance]];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+	request.HTTPMethod = @"POST";
+	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+	request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+
+	NSHTTPURLResponse *response = nil;
+	NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+
+	if ([response.MIMEType isEqualToString:@"application/a-gzip"]) {
+		NSData *inflated = [responseData gzipInflate];
+		return [[NSString alloc] initWithData:inflated encoding:NSUTF8StringEncoding];
+	}
+	if ([response.MIMEType isEqualToString:@"text/plain"]) {
+		ReporterParser *parser = [[ReporterParser alloc] initWithData:responseData];
+		[parser parse];
+		NSDictionary *errorNode = parser.root[kReporterErrorKey];
+		if (errorNode != nil) {
+			NSNumber *code = errorNode[kReporterCodeKey];
+			NSString *message = errorNode[kReporterMessageKey];
+			// Codes 210 ("no report available") and 213 ("no sales for that
+			// date") are both legitimate empty responses — most region/period
+			// combinations have no data and that's normal. Only surface
+			// unexpected errors so logs aren't drowned in 576-line spam.
+			if ((code.integerValue == 210) || (code.integerValue == 213)) {
+				// expected empty — leave outError nil so the caller skips silently
+			} else if (outError) {
+				*outError = [NSString stringWithFormat:@"code=%@ %@", code, message];
+			}
+		}
+		return nil;
+	}
+	if (outError) *outError = [NSString stringWithFormat:@"unexpected MIME %@ status=%ld", response.MIMEType, (long)response.statusCode];
+	return nil;
+}
+
+// Finance.getReport TSV columns include (typical layout):
+//   Start Date \t End Date \t UPC \t ISRC \t Vendor Identifier \t Quantity \t
+//   Partner Share \t Extended Partner Share \t Partner Share Currency \t
+//   Sales or Return \t Apple Identifier \t Artist/Show \t Title/Episode/Season \t
+//   ... (further metadata columns)
+//
+// We sum "Extended Partner Share" grouped by "Partner Share Currency". This
+// is the amount per app per country times its quantity — i.e. the money
+// Apple actually owes you, before tax withholding and bank-transfer fees.
+- (NSDictionary<NSString *, NSNumber *> *)aggregateProceedsByCurrencyFromTSV:(NSString *)tsv {
+	NSArray<NSString *> *lines = [tsv componentsSeparatedByString:@"\n"];
+	if (lines.count < 2) return @{};
+	NSArray<NSString *> *headers = [lines.firstObject componentsSeparatedByString:@"\t"];
+
+	NSInteger amountColumn = -1;
+	NSInteger currencyColumn = -1;
+	for (NSInteger i = 0; i < (NSInteger)headers.count; i++) {
+		NSString *h = headers[i];
+		if ([h caseInsensitiveCompare:@"Extended Partner Share"] == NSOrderedSame) amountColumn = i;
+		else if ([h caseInsensitiveCompare:@"Partner Share Currency"] == NSOrderedSame) currencyColumn = i;
+	}
+	if ((amountColumn < 0) || (currencyColumn < 0)) {
+		NSLog(@"Finance: TSV missing expected columns. Headers were: %@", [headers componentsJoinedByString:@" | "]);
+		return @{};
+	}
+
+	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+	fmt.numberStyle = NSNumberFormatterDecimalStyle;
+	fmt.locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
+
+	NSMutableDictionary<NSString *, NSDecimalNumber *> *totals = [NSMutableDictionary dictionary];
+	for (NSInteger row = 1; row < (NSInteger)lines.count; row++) {
+		NSString *line = lines[row];
+		if (line.length == 0) continue;
+		NSArray<NSString *> *cols = [line componentsSeparatedByString:@"\t"];
+		if (cols.count <= MAX(amountColumn, currencyColumn)) continue;
+		NSString *currency = cols[currencyColumn];
+		NSString *amountStr = cols[amountColumn];
+		if (currency.length == 0 || amountStr.length == 0) continue;
+		NSNumber *amount = [fmt numberFromString:amountStr];
+		if (amount == nil) continue;
+		NSDecimalNumber *running = totals[currency] ?: [NSDecimalNumber zero];
+		NSDecimalNumber *add = [NSDecimalNumber decimalNumberWithDecimal:amount.decimalValue];
+		totals[currency] = [running decimalNumberByAdding:add];
+	}
+
+	NSMutableDictionary<NSString *, NSNumber *> *out = [NSMutableDictionary dictionary];
+	for (NSString *currency in totals) {
+		out[currency] = @(totals[currency].floatValue);
+	}
+	return out;
 }
 
 #pragma mark - Helper Methods

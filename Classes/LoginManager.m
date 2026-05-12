@@ -16,8 +16,14 @@ NSString *const kAppleAuthDeviceAction = @"/verify/device/%@/securitycode";
 NSString *const kAppleAuthCodeAction   = @"/verify/trusteddevice/securitycode";
 NSString *const kAppleAuthTrustAction  = @"/2sv/trust";
 
+// App Store Connect olympus config — used to fetch the current X-Apple-Widget-Key
+// ("authServiceKey") at runtime. Apple rotates this key occasionally; hard-coding it
+// causes silent sign-in failures (idmsa /signin returns 412 with no session headers).
+NSString *const kITCOlympusConfigURL = @"https://appstoreconnect.apple.com/olympus/v1/app/config?hostname=itunesconnect.apple.com";
+
 // Apple Auth API Headers
 NSString *const kAppleAuthWidgetKey        = @"X-Apple-Widget-Key";
+// Fallback only — used if fetching the live key from olympus fails for some reason.
 NSString *const kAppleAuthWidgetValue      = @"e0b80c3bf78523bfe80974d320935bfa30add02e1bff88ec2166c6bd5a706c42";
 NSString *const kAppleAuthSessionIdKey     = @"X-Apple-ID-Session-Id";
 NSString *const kAppleAuthScntKey          = @"scnt";
@@ -51,6 +57,36 @@ NSString *const kITCPaymentVendorsAction        = @"/ra/paymentConsolidation/pro
 NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/providers/%@/sapVendorNumbers/%@?year=%ld&month=%ld";
 
 @implementation LoginManager
+
+// Fetches the current X-Apple-Widget-Key ("authServiceKey") from Apple's olympus
+// config endpoint. The result is cached for the process lifetime — the key changes
+// at most every few years, so a per-process cache is plenty. Falls back to the
+// hard-coded value if the fetch fails (e.g. offline).
++ (NSString *)currentAuthServiceKey {
+	static NSString *cachedKey = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		NSURL *configURL = [NSURL URLWithString:kITCOlympusConfigURL];
+		NSHTTPURLResponse *response = nil;
+		NSError *error = nil;
+		NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:configURL]
+											 returningResponse:&response
+														 error:&error];
+		if (data != nil) {
+			NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+			NSString *liveKey = config[@"authServiceKey"];
+			if ([liveKey isKindOfClass:[NSString class]] && liveKey.length > 0) {
+				cachedKey = [liveKey copy];
+				NSLog(@"LoginManager: fetched live authServiceKey from olympus (%lu chars)", (unsigned long)cachedKey.length);
+			}
+		}
+		if (cachedKey == nil) {
+			cachedKey = kAppleAuthWidgetValue;
+			NSLog(@"LoginManager: olympus config fetch failed (status=%ld, error=%@) — falling back to hard-coded widget key", (long)response.statusCode, error);
+		}
+	});
+	return cachedKey;
+}
 
 - (instancetype)init {
 	return [self initWithAccount:nil];
@@ -148,23 +184,30 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
 							   @"rememberMe": @(YES)};
 	NSData *bodyData = [NSJSONSerialization dataWithJSONObject:bodyDict options:0 error:nil];
 	
+	NSString *widgetKey = [LoginManager currentAuthServiceKey];
+
 	NSURL *signInURL = [NSURL URLWithString:[kAppleAuthBaseURL stringByAppendingString:kAppleAuthSignInAction]];
 	NSMutableURLRequest *signInRequest = [NSMutableURLRequest requestWithURL:signInURL];
 	[signInRequest setHTTPMethod:@"POST"];
-	[signInRequest setValue:kAppleAuthWidgetValue forHTTPHeaderField:kAppleAuthWidgetKey];
+	[signInRequest setValue:widgetKey forHTTPHeaderField:kAppleAuthWidgetKey];
 	[signInRequest setValue:kAppleAuthAcceptValue forHTTPHeaderField:kAppleAuthAcceptKey];
 	[signInRequest setValue:kAppleAuthContentTypeValue forHTTPHeaderField:kAppleAuthContentTypeKey];
     [signInRequest setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
 	[signInRequest setHTTPBody:bodyData];
-	
+
 	NSHTTPURLResponse *signInResponse = nil;
     NSError* error = nil;
     [NSURLConnection sendSynchronousRequest:signInRequest returningResponse:&signInResponse error:&error];
 	NSString *location = signInResponse.allHeaderFields[kAppleAuthLocationKey];
 	appleAuthSessionId = signInResponse.allHeaderFields[kAppleAuthSessionIdKey];
 	appleAuthScnt = signInResponse.allHeaderFields[kAppleAuthScntKey];
-	
-    NSLog(@"error: %@", error);
+
+	NSLog(@"LoginManager signin: status=%ld sessionId=%@ scnt=%@ location=%@ error=%@",
+		  (long)signInResponse.statusCode,
+		  appleAuthSessionId.length > 0 ? @"<present>" : @"<missing>",
+		  appleAuthScnt.length > 0 ? @"<present>" : @"<missing>",
+		  location.length > 0 ? @"<present>" : @"<missing>",
+		  error);
     
     // select team
     /*
@@ -185,7 +228,11 @@ NSString *const kITCPaymentVendorsPaymentAction = @"/ra/paymentConsolidation/pro
     */
     
 	if ((appleAuthSessionId.length == 0) || (appleAuthScnt.length == 0)) {
-		// Wrong credentials?
+		// Apple's /signin returned no session headers. Common causes: stale
+		// X-Apple-Widget-Key (412 Precondition Failed) or wrong credentials (401).
+		NSLog(@"LoginManager: signin failed — no session headers (status=%ld). Used widget key starting with %@…",
+			  (long)signInResponse.statusCode,
+			  widgetKey.length >= 8 ? [widgetKey substringToIndex:8] : widgetKey);
 		if ([self.delegate respondsToSelector:@selector(loginFailed:)]) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self.delegate loginFailed:self];
