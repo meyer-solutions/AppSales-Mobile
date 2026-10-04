@@ -123,6 +123,7 @@
 		DAFC5F801C16B29D00261B16 /* ReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F7F1C16B29D00261B16 /* ReviewsViewController.m */; };
 		DAFC5F931C16BFAD00261B16 /* Review.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F921C16BFAD00261B16 /* Review.m */; };
 		DAFC5F961C16C07100261B16 /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFC5F951C16C07100261B16 /* Version.m */; };
+		F80135BA3072EF3400F81A79 /* AppSalesSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F80135B93072EF3400F81A79 /* AppSalesSceneDelegate.m */; };
 		F876532829A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F876532629A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.m */; };
 		F876532929A7D6EA004AE9A8 /* UIToolbar+FixAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F876532729A7D6EA004AE9A8 /* UIToolbar+FixAppearance.m */; };
 /* End PBXBuildFile section */
@@ -341,6 +342,8 @@
 		DAFC5F921C16BFAD00261B16 /* Review.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Review.m; sourceTree = "<group>"; };
 		DAFC5F941C16C07100261B16 /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
 		DAFC5F951C16C07100261B16 /* Version.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
+		F80135B83072EF2B00F81A79 /* AppSalesSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppSalesSceneDelegate.h; sourceTree = "<group>"; };
+		F80135B93072EF3400F81A79 /* AppSalesSceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppSalesSceneDelegate.m; sourceTree = "<group>"; };
 		F876532429A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+FixAppearance.h"; sourceTree = "<group>"; };
 		F876532529A7D6EA004AE9A8 /* UIToolbar+FixAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+FixAppearance.h"; sourceTree = "<group>"; };
 		F876532629A7D6EA004AE9A8 /* UINavigationBar+FixAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+FixAppearance.m"; sourceTree = "<group>"; };
@@ -401,6 +404,8 @@
 				7F7F1D0413F63F7F00F18143 /* Promo Code Download */,
 				7F709D9013BD06570008DBAD /* Model */,
 				DA49843E1C129F9E009BFC8F /* Vendor */,
+				F80135B83072EF2B00F81A79 /* AppSalesSceneDelegate.h */,
+				F80135B93072EF3400F81A79 /* AppSalesSceneDelegate.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -945,6 +950,7 @@
 				621D32432531C98C00D0EE97 /* UIViewController+Alert.m in Sources */,
 				DA4984411C12A884009BFC8F /* MBProgressHUD.m in Sources */,
 				7F709D8F13BD064E0008DBAD /* ASAccount.m in Sources */,
+				F80135BA3072EF3400F81A79 /* AppSalesSceneDelegate.m in Sources */,
 				7F1499CA13BE15F500D89064 /* NSData+Compression.m in Sources */,
 				7F1499D013BE311600D89064 /* ReportDownloadOperation.m in Sources */,
 				DA9DB1B61C0FEC48007B0178 /* SecurityCodeInputController.m in Sources */,

@@ -33,6 +33,14 @@
 @property (nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+// Called by AppSalesSceneDelegate once the window scene is connected.
+- (void)setupUserInterfaceInWindow:(UIWindow *)window;
+- (void)handleOpenURLs;
+- (void)handleDidBecomeActive;
+- (void)handleWillEnterForeground;
+- (void)handleDidEnterBackground;
+- (UIInterfaceOrientationMask)supportedInterfaceOrientationsForWindow:(UIWindow *)window;
+
 - (BOOL)migrateDataIfNeeded;
 - (void)saveContext;
 - (NSString *)applicationDocumentsDirectory;

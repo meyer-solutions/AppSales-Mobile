@@ -37,19 +37,33 @@
 	[[KKPasscodeLock sharedLock] setEraseOption:NO];
 	
 	srandom((unsigned)time(NULL));
-	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	
+
 	NSString *currencyCode = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencyCode];
 	if (![[CurrencyManager sharedManager].availableCurrencies containsObject:currencyCode]) {
 		currencyCode = @"USD";
 	}
-	
+
 	NSDictionary *defaults = @{kSettingDownloadPayments: @(YES),
 							   @"CurrencyManagerBaseCurrency": currencyCode};
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(promoCodeLicenseAgreementLoaded:) name:@"PromoCodeOperationLoadedLicenseAgreementNotification" object:nil];
-	
+
+	NSString *productSortByValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"ProductSortby"];
+	if (productSortByValue == nil) {
+		[[NSUserDefaults standardUserDefaults] setObject:@"productId" forKey:@"ProductSortby"];
+	}
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(promoCodeDownloadFailed:) name:ASPromoCodeDownloadFailedNotification object:nil];
+
+	// The window and view hierarchy are created in -setupUserInterfaceInWindow:,
+	// which AppSalesSceneDelegate calls when the window scene connects.
+	return YES;
+}
+
+- (void)setupUserInterfaceInWindow:(UIWindow *)newWindow {
+	self.window = newWindow;
+
 	BOOL iPad = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad;
 	if (!iPad) {
 		AccountsViewController *rootViewController = [[AccountsViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -78,18 +92,7 @@
 	}
 	
 	[[CurrencyManager sharedManager] refreshIfNeeded];
-	
-	NSString *productSortByValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"ProductSortby"];
-	if (productSortByValue == nil) {
-		[[NSUserDefaults standardUserDefaults] setObject:@"productId" forKey:@"ProductSortby"];
-	}
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(promoCodeDownloadFailed:) name:ASPromoCodeDownloadFailedNotification object:nil];
-	
-	if (launchOptions[UIApplicationLaunchOptionsURLKey]) {
-		[self.accountsViewController performSelector:@selector(downloadReports:) withObject:nil afterDelay:0.0];
-	}
-	
+
 	[self showPasscodeLockIfNeededWithBiometrics:YES];
 	if (iPad) {
 		//Restore previously-selected account:
@@ -104,11 +107,18 @@
 			[self selectAccount:nil];
 		}
 	}
-	
-	return YES;
 }
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+// Deprecated in iOS 27 in favor of -[UIWindowSceneDelegate supportedInterfaceOrientationsForWindowScene:],
+// which AppSalesSceneDelegate implements; UIKit still calls this on older systems.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)aWindow {
+	return [self supportedInterfaceOrientationsForWindow:aWindow];
+}
+#pragma clang diagnostic pop
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientationsForWindow:(UIWindow *)aWindow {
 	BOOL iPad = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad);
 	NSUInteger orientations = iPad ? UIInterfaceOrientationMaskAll : UIInterfaceOrientationMaskAllButUpsideDown;
 	
@@ -176,9 +186,9 @@
 	self.window.rootViewController = tabController;
 }
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    [self.accountsViewController performSelector:@selector(downloadReports:) withObject:nil afterDelay:0.0];
-    return YES;
+// Called by AppSalesSceneDelegate when the app is opened via its URL scheme ("appsales://").
+- (void)handleOpenURLs {
+	[self.accountsViewController performSelector:@selector(downloadReports:) withObject:nil afterDelay:0.0];
 }
 
 - (BOOL)migrateDataIfNeeded {
@@ -228,17 +238,19 @@
 	return YES;
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
+#pragma mark - Scene life cycle (forwarded from AppSalesSceneDelegate)
+
+- (void)handleDidEnterBackground {
 	[self saveContext];
 	[self showPasscodeLockIfNeededWithBiometrics:NO];
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
+- (void)handleWillEnterForeground {
 	[[CurrencyManager sharedManager] refreshIfNeeded];
 	[self showPasscodeLockIfNeededWithBiometrics:YES];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
+- (void)handleDidBecomeActive {
 	[[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
