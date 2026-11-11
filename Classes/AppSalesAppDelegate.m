@@ -429,12 +429,68 @@
 	return appSupportDirectory;
 }
 
+// nil when the App Group entitlement is missing (e.g. unsigned builds).
 - (NSURL *)sharedApplicationGroupContainer {
-    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.de.meyer-solutions.AppSalesMobile"];
-    NSAssert(containerURL != nil, @"The shared application group container is unavailable. Check your entitlements and provisioning profiles for this target.");
-    
-    return containerURL;
+	return [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.de.meyer-solutions.AppSalesMobile"];
 }
+
+#pragma mark - Export for MoneyBook
+
+- (NSURL *)moneyBookExportURL {
+	return [[self sharedApplicationGroupContainer] URLByAppendingPathComponent:@"AppSales.sqlite"];
+}
+
+- (NSDate *)lastMoneyBookExportDate {
+	NSURL *url = [self moneyBookExportURL];
+	if (url == nil) return nil;
+	return [[[NSFileManager defaultManager] attributesOfItemAtPath:url.path error:nil] fileModificationDate];
+}
+
+- (void)exportDatabaseForMoneyBookWithCompletion:(void (^)(BOOL success, NSString *message))completion {
+	NSURL *container = [self sharedApplicationGroupContainer];
+	if (container == nil) {
+		if (completion) completion(NO, NSLocalizedString(@"The shared App Group is not available. Check the App Group entitlement (group.de.meyer-solutions.AppSalesMobile) of this build.", nil));
+		return;
+	}
+	[self saveContext];
+	NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"AppSales.sqlite"];
+	NSURL *exportURL = [self moneyBookExportURL];
+	NSManagedObjectModel *model = [self managedObjectModel];
+	UIBackgroundTaskIdentifier task = [[UIApplication sharedApplication] beginBackgroundTaskWithName:@"ExportForMoneyBook" expirationHandler:nil];
+	dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+		@autoreleasepool {
+			NSFileManager *fm = [NSFileManager defaultManager];
+			// Copy through Core Data (SQLite backup incl. the -wal) into one file without journal,
+			// then swap it in so MoneyBook never sees a half-written database.
+			NSURL *tempURL = [container URLByAppendingPathComponent:[NSString stringWithFormat:@"AppSales-export-%@.sqlite", [NSUUID UUID].UUIDString]];
+			NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
+			NSError *error = nil;
+			BOOL ok = [psc replacePersistentStoreAtURL:tempURL
+									destinationOptions:@{NSSQLitePragmasOption: @{@"journal_mode": @"DELETE"}}
+							withPersistentStoreFromURL:storeURL
+										 sourceOptions:nil
+											 storeType:NSSQLiteStoreType
+												 error:&error];
+			if (ok) {
+				[fm removeItemAtURL:exportURL error:nil];
+				ok = [fm moveItemAtURL:tempURL toURL:exportURL error:&error];
+			}
+			for (NSString *suffix in @[@"", @"-wal", @"-shm"]) {
+				[fm removeItemAtPath:[tempURL.path stringByAppendingString:suffix] error:nil];
+			}
+			if (!ok) NSLog(@"Export for MoneyBook failed: %@", error);
+			dispatch_async(dispatch_get_main_queue(), ^{
+				if (completion) {
+					completion(ok, ok ? NSLocalizedString(@"Your sales and payments are now available in MoneyBook on this device: open MoneyBook and choose “Import AppSales Database…”, or fetch the App Store account.", nil)
+									  : error.localizedDescription);
+				}
+				[[UIApplication sharedApplication] endBackgroundTask:task];
+			});
+		}
+	});
+}
+
+#pragma mark -
 
 - (void)promoCodeDownloadFailed:(NSNotification *)notification {
 	NSString *errorDescription = notification.userInfo[kASPromoCodeDownloadFailedErrorDescription];

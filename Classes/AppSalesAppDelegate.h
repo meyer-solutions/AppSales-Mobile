@@ -46,6 +46,12 @@
 - (NSString *)applicationDocumentsDirectory;
 - (NSURL *)applicationSupportDirectory;
 - (NSURL *)sharedApplicationGroupContainer;
+/// Writes a consistent single-file copy of the database to the shared App Group container
+/// ("AppSales.sqlite"), where MoneyBook (same team, same App Group) reads it. Started manually
+/// from Settings; runs in the background, `completion` is called on the main queue.
+- (void)exportDatabaseForMoneyBookWithCompletion:(void (^)(BOOL success, NSString *message))completion;
+/// Date of the last copy for MoneyBook, nil if there is none.
+- (NSDate *)lastMoneyBookExportDate;
 - (void)loadAccount:(ASAccount *)account;
 - (void)selectAccount:(id)sender;
 - (void)showPasscodeLockIfNeededWithBiometrics:(BOOL)useBiometrics;

@@ -29,6 +29,7 @@
 #import "IconManager.h"
 #import "ZIPArchive.h"
 #import "UIViewController+Alert.h"
+#import "AppSalesAppDelegate.h"
 
 #define kAddNewAccountEditorIdentifier		@"AddNewAccountEditorIdentifier"
 #define kEditAccountEditorIdentifier		@"EditAccountEditorIdentifier"
@@ -37,6 +38,7 @@
 #define kPasscodeLockButton					@"PasscodeLockButton"
 #define kImportReportsButton				@"ImportReportsButton"
 #define kExportReportsButton				@"ExportReportsButton"
+#define kExportForMoneyBookButton			@"ExportForMoneyBookButton"
 #define	kDeleteAccountButton				@"DeleteAccount"
 #define kAccountTitle						@"title"
 #define kKeychainServiceIdentifier			@"iTunesConnect"
@@ -510,7 +512,19 @@
 																				title:NSLocalizedString(@"Products", nil)
 																		  description:NSLocalizedString(@"", nil)];
 	
-	NSArray *sections = @[generalSection, paymentsSection, productsSection];
+	// MoneyBook (same developer, shared App Group): manual copy of the database.
+	FieldSpecifier *moneyBookField = [FieldSpecifier buttonFieldWithKey:kExportForMoneyBookButton title:NSLocalizedString(@"Share Data with MoneyBook", nil)];
+	NSDate *lastExport = [(AppSalesAppDelegate *)[UIApplication sharedApplication].delegate lastMoneyBookExportDate];
+	NSString *moneyBookFooter = NSLocalizedString(@"Copies all sales reports and payments for MoneyBook on this device. Nothing is shared automatically – tap again to update.", nil);
+	if (lastExport) {
+		moneyBookFooter = [moneyBookFooter stringByAppendingFormat:@"\n\n%@ %@", NSLocalizedString(@"Last shared:", nil),
+						   [NSDateFormatter localizedStringFromDate:lastExport dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]];
+	}
+	FieldSectionSpecifier *moneyBookSection = [FieldSectionSpecifier sectionWithFields:@[moneyBookField]
+																				 title:@"MoneyBook"
+																		   description:moneyBookFooter];
+
+	NSArray *sections = @[generalSection, paymentsSection, productsSection, moneyBookSection];
 	settingsViewController = [[FieldEditorViewController alloc] initWithFieldSections:sections title:NSLocalizedString(@"Settings",nil)];
 	settingsViewController.doneButtonTitle = NSLocalizedString(@"Done", nil);
 	settingsViewController.showDoneButtonOnLeft = YES;
@@ -629,6 +643,13 @@
 		[settingsNavController pushViewController:vc animated:YES];
 	} else if ([key isEqualToString:kUpdateExchangeRatesButton]) {
 		[[CurrencyManager sharedManager] forceRefresh];
+	} else if ([key isEqualToString:kExportForMoneyBookButton]) {
+		AppSalesAppDelegate *appDelegate = (AppSalesAppDelegate *)[UIApplication sharedApplication].delegate;
+		[appDelegate exportDatabaseForMoneyBookWithCompletion:^(BOOL success, NSString *message) {
+			[[UIViewController topViewController] displayAlertWithTitle:(success ? NSLocalizedString(@"Shared with MoneyBook", nil)
+																				 : NSLocalizedString(@"Sharing Failed", nil))
+																message:message];
+		}];
     } else if ([key isEqualToString:kImportReportsButton]) {
         ASAccount *account = (ASAccount *)editor.context;
         if (account.isDownloadingReports) {
